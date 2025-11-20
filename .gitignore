@@ -1,20 +1,43 @@
-
-###> symfony/framework-bundle ###
-/.env.local
-/.env.local.php
-/.env.*.local
-/config/secrets/prod/prod.decrypt.private.php
-/public/bundles/
-/var/
+### Symfony ###
 /vendor/
-###< symfony/framework-bundle ###
+/var/
+/public/bundles/
+/public/build/
+/node_modules/
 
-###> phpunit/phpunit ###
+### Dotenv files ###
+.env
+.env.local
+.env.*.local
+.env.test
+.env.test.local
+
+### Cache & Logs ###
+/var/cache/
+/var/log/
+
+### IDE / Editors ###
+/.vscode/
+/.idea/
+/nbproject/
+*.swp
+*.swo
+
+### Composer ###
+composer.lock
+phpunit.xml
+
+### PHPUnit ###
 /phpunit.xml
-/.phpunit.cache/
-###< phpunit/phpunit ###
+/phpunit.xml.dist
+/.phpunit.result.cache
+/.phpunit.cache
 
-###> symfony/asset-mapper ###
-/public/assets/
-/assets/vendor/
-###< symfony/asset-mapper ###
+### OS Files ###
+.DS_Store
+Thumbs.db
+
+### Misc ###
+/coverage/
+/*.cache
+/.env.backup

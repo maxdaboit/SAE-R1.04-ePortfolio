@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}DA BOT - Portfolio{% endblock %}</title>
+    <title>{% block title %}DA BOIT - Portfolio{% endblock %}</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -122,33 +122,39 @@
             font-size: 0.9rem;
         }
         
-        /* Tech Stack */
-        .tech-stack {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            padding: 2rem 0 4rem;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-        
-        .tech-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-        
-        .tech-icon {
-            width: 24px;
-            height: 24px;
-            border-radius: 4px;
-            background: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+        /* Tech Stack - Défilement infini */
+        /* Tech Stack - Défilement infini fluide */
+.tech-stack-wrapper {
+    overflow: hidden;
+    width: 100%;
+    padding: 40px 0;
+}
+
+.tech-stack {
+    display: flex;
+    gap: 50px;
+    animation: scroll-left 30s linear infinite;
+    width: max-content;
+}
+
+.tech-item {
+    flex-shrink: 0;
+}
+
+.tech-item img {
+    display: block;
+}
+
+@keyframes scroll-left {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+    
         
         /* Section Titles */
         .section-title {
@@ -223,7 +229,7 @@
         <div class="container">
             <div class="header-content">
                 <div class="logo-section">
-                    <h1>DA BOT</h1>
+                    <h1>DA BOIT</h1>
                     <p>Maxence</p>
                 </div>
                 <button class="menu-btn">Menu</button>

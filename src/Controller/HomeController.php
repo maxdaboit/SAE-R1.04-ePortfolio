@@ -13,11 +13,11 @@ class HomeController extends AbstractController
     public function index(): Response
     {
         return $this->render('home/index.html.twig', [
-            'title' => 'SAR Portfolio',
+            'title' => 'SAE Portfolio',
             'sections' => [
                 'hero' => [
-                    'name' => 'Votre Nom',
-                    'title' => 'Développeur Full Stack',
+                    'name' => 'DA BOIT',
+                    'title' => 'Etudiant R&T',
                     'description' => 'Passionné par la création d\'applications web modernes',
                 ],
                 'about' => [

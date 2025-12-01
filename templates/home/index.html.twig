@@ -1,7 +1,7 @@
 {# templates/home/index.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block title %}DA BOT - Étudiant R&T{% endblock %}
+{% block title %}DA BOIT - Étudiant R&T{% endblock %}
 
 {% block stylesheets %}
 <style>
@@ -222,22 +222,41 @@
 </div>
 
 {# Tech Stack #}
-<div class="tech-stack">
+<div class="tech-stack" style="display: flex; gap: 50px; flex-wrap: wrap;">
     <div class="tech-item">
-        <div class="tech-icon">🔧</div>
-        <span>Logicisum</span>
+        <div class="tech-icon">
+            <img src="{{ asset('Image/cisco.png') }}" alt="Cisco" width="50" height="50">
+        </div>
     </div>
     <div class="tech-item">
-        <div class="tech-icon">🎨</div>
-        <span>Logicisum</span>
+        <div class="tech-icon">
+            <img src="{{ asset('Image/c.png') }}" alt="C" width="50" height="50">
+        </div>
     </div>
     <div class="tech-item">
-        <div class="tech-icon">⚙️</div>
-        <span>Logicisum</span>
+        <div class="tech-icon">
+            <img src="{{ asset('Image/python.png') }}" alt="Python" width="50" height="50">
+        </div>
     </div>
     <div class="tech-item">
-        <div class="tech-icon">🔌</div>
-        <span>Logicisum</span>
+        <div class="tech-icon">
+            <img src="{{ asset('Image/symfony.png') }}" alt="Symfony" width="50" height="50">
+        </div>
+    </div>
+    <div class="tech-item">
+        <div class="tech-icon">
+            <img src="{{ asset('Image/html.png') }}" alt="HTML" width="50" height="50">
+        </div>
+    </div>
+    <div class="tech-item">
+        <div class="tech-icon">
+            <img src="{{ asset('Image/css.png') }}" alt="CSS" width="50" height="50">
+        </div>
+    </div>
+    <div class="tech-item">
+        <div class="tech-icon">
+            <img src="{{ asset('Image/ubuntu.png') }}" alt="Ubuntu" width="50" height="50">
+        </div>
     </div>
 </div>
 
@@ -250,7 +269,7 @@
             <div class="project-card">
                 <div class="project-image gradient-1"></div>
                 <div class="project-content">
-                    <h3 class="project-title">Important project</h3>
+                    <h3 class="project-title">RT1 - Administrer les réseaux et l’Internet</h3>
                     <p class="project-description">Call out some information that made this project special and worth showcasing.</p>
                 </div>
             </div>
@@ -258,7 +277,7 @@
             <div class="project-card">
                 <div class="project-image gradient-2"></div>
                 <div class="project-content">
-                    <h3 class="project-title">Featured project</h3>
+                    <h3 class="project-title">RT2 - Connecter les entreprises et les usagers</h3>
                     <p class="project-description">Call out some information that made this project special and worth showcasing.</p>
                 </div>
             </div>
@@ -266,7 +285,7 @@
             <div class="project-card">
                 <div class="project-image gradient-3"></div>
                 <div class="project-content">
-                    <h3 class="project-title">Important project</h3>
+                    <h3 class="project-title">RT3 - Créer des outils et des applications informatiques pour les R&T</h3>
                     <p class="project-description">Call out some information that made this project special and worth showcasing.</p>
                 </div>
             </div>
@@ -277,7 +296,7 @@
 {# About Section #}
 <section class="about-section">
     <div class="container">
-        <h2 class="section-title">About me</h2>
+        <h2 class="section-title">À propos de moi</h2>
         
         <div class="about-content">
             <div class="about-image">
@@ -295,7 +314,7 @@
 {# Interests Section #}
 <section class="interests-section">
     <div class="container">
-        <h3>Interests and hobbies</h3>
+        <h3>Centres d’intérêt et loisirs</h3>
         <p>A little segment to reveal out the afterschool aspects of this webpage. When the person listed is really? What do they then, and what they like? You can go a little thought because this too, for if you want to.</p>
         
         <div class="interests-grid">
@@ -312,11 +331,11 @@
         <div class="education-list">
             <div class="education-item">
                 <h3 class="education-title">Menuiserie</h3>
-                <span class="education-year">2022</span>
+                <span class="education-year">2020</span>
             </div>
             <div class="education-item">
                 <h3 class="education-title">Bac Pro SEN</h3>
-                <span class="education-year">2024</span>
+                <span class="education-year">2019</span>
             </div>
         </div>
     </div>

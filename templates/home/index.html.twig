@@ -222,79 +222,42 @@
 </div>
 
 {# Tech Stack #}
-<div class="tech-stack" style="display: flex; gap: 50px; flex-wrap: wrap;">
-    <div class="tech-item">
-        <div class="tech-icon">
-            <img src="{{ asset('Image/cisco.png') }}" alt="Cisco" width="50" height="50">
-        </div>
-    </div>
-    <div class="tech-item">
-        <div class="tech-icon">
-            <img src="{{ asset('Image/c.png') }}" alt="C" width="50" height="50">
-        </div>
-    </div>
-    <div class="tech-item">
-        <div class="tech-icon">
-            <img src="{{ asset('Image/python.png') }}" alt="Python" width="50" height="50">
-        </div>
-    </div>
-    <div class="tech-item">
-        <div class="tech-icon">
-            <img src="{{ asset('Image/symfony.png') }}" alt="Symfony" width="50" height="50">
-        </div>
-    </div>
-    <div class="tech-item">
-        <div class="tech-icon">
-            <img src="{{ asset('Image/html.png') }}" alt="HTML" width="50" height="50">
-        </div>
-    </div>
-    <div class="tech-item">
-        <div class="tech-icon">
-            <img src="{{ asset('Image/css.png') }}" alt="CSS" width="50" height="50">
-        </div>
-    </div>
-    <div class="tech-item">
-        <div class="tech-icon">
-            <img src="{{ asset('Image/ubuntu.png') }}" alt="Ubuntu" width="50" height="50">
-        </div>
+<div class="tech-stack-wrapper">
+    <div class="tech-stack" id="techStack">
+        <div class="tech-item"><img src="{{ asset('Image/cisco.png') }}" alt="Cisco" width="50" height="50"></div>
+        <div class="tech-item"><img src="{{ asset('Image/c.png') }}" alt="C" width="50" height="50"></div>
+        <div class="tech-item"><img src="{{ asset('Image/python.png') }}" alt="Python" width="50" height="50"></div>
+        <div class="tech-item"><img src="{{ asset('Image/symfony.png') }}" alt="Symfony" width="50" height="50"></div>
+        <div class="tech-item"><img src="{{ asset('Image/html.png') }}" alt="HTML" width="50" height="50"></div>
+        <div class="tech-item"><img src="{{ asset('Image/css.png') }}" alt="CSS" width="50" height="50"></div>
+        <div class="tech-item"><img src="{{ asset('Image/ubuntu.png') }}" alt="Ubuntu" width="50" height="50"></div>
     </div>
 </div>
 
 {# Portfolio Section #}
-<section class="portfolio-section">
+{# Portfolio Section #}
+<section class="portfolio-section" id="portfolio">
     <div class="container">
         <h2 class="section-title">Portfolio</h2>
         
         <div class="projects-grid">
-            <div class="project-card">
-                <div class="project-image gradient-1"></div>
-                <div class="project-content">
-                    <h3 class="project-title">RT1 - Administrer les réseaux et l’Internet</h3>
-                    <p class="project-description">Call out some information that made this project special and worth showcasing.</p>
+            {% for project in projects %}
+            <a href="{{ path('app_project_detail', {id: project.id}) }}" class="project-card-link">
+                <div class="project-card">
+                    <div class="project-image {{ project.gradient }}"></div>
+                    <div class="project-content">
+                        <h3 class="project-title">{{ project.title }}</h3>
+                        <p class="project-description">{{ project.description }}</p>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="project-card">
-                <div class="project-image gradient-2"></div>
-                <div class="project-content">
-                    <h3 class="project-title">RT2 - Connecter les entreprises et les usagers</h3>
-                    <p class="project-description">Call out some information that made this project special and worth showcasing.</p>
-                </div>
-            </div>
-            
-            <div class="project-card">
-                <div class="project-image gradient-3"></div>
-                <div class="project-content">
-                    <h3 class="project-title">RT3 - Créer des outils et des applications informatiques pour les R&T</h3>
-                    <p class="project-description">Call out some information that made this project special and worth showcasing.</p>
-                </div>
-            </div>
+            </a>
+            {% endfor %}
         </div>
     </div>
 </section>
 
 {# About Section #}
-<section class="about-section">
+<section class="about-section" id="about">
     <div class="container">
         <h2 class="section-title">À propos de moi</h2>
         
@@ -312,9 +275,9 @@
 </section>
 
 {# Interests Section #}
-<section class="interests-section">
+<section class="interests-section" id="interests">
     <div class="container">
-        <h3>Centres d’intérêt et loisirs</h3>
+        <h3>Centres d'intérêt et loisirs</h3>
         <p>A little segment to reveal out the afterschool aspects of this webpage. When the person listed is really? What do they then, and what they like? You can go a little thought because this too, for if you want to.</p>
         
         <div class="interests-grid">
@@ -326,7 +289,7 @@
 </section>
 
 {# Education Section #}
-<section class="education-section">
+<section class="education-section" id="education">
     <div class="container">
         <div class="education-list">
             <div class="education-item">
@@ -340,4 +303,33 @@
         </div>
     </div>
 </section>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+// Animation défilement logos
+const stack = document.getElementById('techStack');
+const items = stack.innerHTML;
+
+// Clone 3 fois pour un défilement fluide
+stack.innerHTML = items + items + items;
+
+let scrollPos = 0;
+const speed = 1;
+
+function animate() {
+    scrollPos += speed;
+    
+    const maxScroll = stack.scrollWidth / 3;
+    
+    if (scrollPos >= maxScroll) {
+        scrollPos = 0;
+    }
+    
+    stack.style.transform = `translateX(-${scrollPos}px)`;
+    requestAnimationFrame(animate);
+}
+
+animate();
+</script>
 {% endblock %}

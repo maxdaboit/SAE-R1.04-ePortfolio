@@ -123,39 +123,22 @@
         }
         
         /* Tech Stack - Défilement infini */
-        /* Tech Stack - Défilement infini fluide */
-.tech-stack-wrapper {
-    overflow: hidden;
-    width: 100%;
-    padding: 40px 0;
-}
+        .tech-stack-wrapper {
+            overflow: hidden;
+            width: 100%;
+            padding: 40px 0;
+        }
 
-.tech-stack {
-    display: flex;
-    gap: 50px;
-    animation: scroll-left 30s linear infinite;
-    width: max-content;
-}
+        .tech-stack {
+            display: flex;
+            gap: 50px;
+            width: max-content;
+        }
 
-.tech-item {
-    flex-shrink: 0;
-}
-
-.tech-item img {
-    display: block;
-}
-
-@keyframes scroll-left {
-    from {
-        transform: translateX(0);
-    }
-    to {
-        transform: translateX(-50%);
-    }
-}
-
+        .tech-item {
+            flex-shrink: 0;
+        }
     
-        
         /* Section Titles */
         .section-title {
             font-size: 2rem;
@@ -203,6 +186,64 @@
         .social-links a:hover {
             background: #e5e5e5;
         }
+
+        /* Menu Modal */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .menu-overlay.active {
+            display: flex;
+        }
+
+        .menu-content {
+            background: white;
+            padding: 3rem;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+        }
+
+        .menu-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+
+        .menu-links {
+            list-style: none;
+        }
+
+        .menu-links li {
+            margin: 1.5rem 0;
+        }
+
+        .menu-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .menu-links a:hover {
+            color: var(--text-secondary);
+        }
         
         @media (max-width: 768px) {
             .container {
@@ -218,6 +259,17 @@
                 gap: 1.5rem;
                 text-align: center;
             }
+        }
+        a {
+        text-decoration: none !important;
+        }
+
+        a:hover, a:focus, a:active {
+            text-decoration: none !important;
+        }
+
+        .project-card-link {
+            text-decoration: none !important;
         }
     </style>
     
@@ -236,6 +288,19 @@
             </div>
         </div>
     </header>
+    .project-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    }
+
+    .project-card-link:hover {
+        text-decoration: none;
+    }
+
+.project-card {
+    cursor: pointer;
+}
 
     {# Main Content #}
     <main>
@@ -256,6 +321,48 @@
             </div>
         </div>
     </footer>
+
+    {# Menu Modal #}
+    <div class="menu-overlay" id="menuOverlay">
+        <div class="menu-content">
+            <button class="menu-close" id="menuClose">&times;</button>
+            <ul class="menu-links">
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#about">À propos</a></li>
+                <li><a href="#interests">Centres d'intérêt</a></li>
+                <li><a href="#education">Formation</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+    const menuBtn = document.querySelector('.menu-btn');
+    const menuOverlay = document.getElementById('menuOverlay');
+    const menuClose = document.getElementById('menuClose');
+
+    if (menuBtn && menuOverlay && menuClose) {
+        menuBtn.addEventListener('click', () => {
+            menuOverlay.classList.add('active');
+        });
+
+        menuClose.addEventListener('click', () => {
+            menuOverlay.classList.remove('active');
+        });
+
+        menuOverlay.addEventListener('click', (e) => {
+            if (e.target === menuOverlay) {
+                menuOverlay.classList.remove('active');
+            }
+        });
+
+        // Fermer le menu quand on clique sur un lien
+        document.querySelectorAll('.menu-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuOverlay.classList.remove('active');
+            });
+        });
+    }
+    </script>
 
     {% block javascripts %}{% endblock %}
 </body>

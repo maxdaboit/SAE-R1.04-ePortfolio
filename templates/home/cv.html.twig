@@ -1,0 +1,177 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}CV - DA BOIT Maxence{% endblock %}
+
+{% block body %}
+{# En-tête avec intitulé du poste - OBLIGATOIRE #}
+<section class="bg-primary text-white py-5">
+    <div class="container text-center">
+        <h1 class="display-5 fw-bold">Administrateur Réseaux & Télécommunications</h1>
+        <p class="lead">Spécialiste en infrastructures IT et cybersécurité</p>
+    </div>
+</section>
+
+<div class="container my-5">
+    {# Section Formations - OBLIGATOIRE #}
+    <section class="mb-5">
+        <h2 class="border-bottom border-primary pb-2 mb-4">
+            <i class="fas fa-graduation-cap text-primary me-2"></i>Formations
+        </h2>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="card-title">BUT Réseaux & Télécommunications</h5>
+                            <span class="badge bg-primary">2023-2025</span>
+                        </div>
+                        <h6 class="card-subtitle mb-2 text-muted">IUT de Roanne - Université Jean Monnet</h6>
+                        <p class="card-text">Formation en administration réseau, cybersécurité, développement d'applications et gestion d'infrastructures IT.</p>
+                    </div>
+                </div>
+                
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="card-title">CAP Menuiserie</h5>
+                            <span class="badge bg-secondary">2020-2022</span>
+                        </div>
+                        <h6 class="card-subtitle mb-2 text-muted">Centre de Formation</h6>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="card-title">Bac Pro SEN</h5>
+                            <span class="badge bg-secondary">2016-2019</span>
+                        </div>
+                        <h6 class="card-subtitle mb-2 text-muted">Lycée ARAGO - Roanne</h6>
+                        <p class="card-text">Systèmes Électroniques Numériques</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {# Section Expériences Professionnelles - OBLIGATOIRE #}
+    <section class="mb-5">
+        <h2 class="border-bottom border-primary pb-2 mb-4">
+            <i class="fas fa-briefcase text-primary me-2"></i>Expériences Professionnelles
+        </h2>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="card-title">Stage - Administrateur Réseau Junior</h5>
+                            <span class="badge bg-info">2024</span>
+                        </div>
+                        <h6 class="card-subtitle mb-2 text-muted">Entreprise XYZ - Roanne</h6>
+                        <ul class="mt-2">
+                            <li>Configuration et maintenance des équipements réseau Cisco</li>
+                            <li>Mise en place de VLANs et politiques de sécurité</li>
+                            <li>Support technique aux utilisateurs</li>
+                            <li>Documentation des infrastructures réseau</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <h5 class="card-title">Projet Universitaire - Développement Web</h5>
+                            <span class="badge bg-info">2023-2024</span>
+                        </div>
+                        <h6 class="card-subtitle mb-2 text-muted">IUT de Roanne</h6>
+                        <ul class="mt-2">
+                            <li>Développement d'une application de monitoring réseau avec Symfony</li>
+                            <li>Intégration d'API REST pour la collecte de données</li>
+                            <li>Création d'interfaces utilisateur responsive</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {# Section Compétences - OBLIGATOIRE #}
+    <section class="mb-5">
+        <h2 class="border-bottom border-primary pb-2 mb-4">
+            <i class="fas fa-cogs text-primary me-2"></i>Compétences
+        </h2>
+        <div class="row">
+            <div class="col-md-6">
+                <h5 class="fw-bold mb-3">Compétences Techniques</h5>
+                <div class="mb-3">
+                    <span class="fw-semibold">Administration Réseau</span>
+                    <div class="progress" style="height: 25px;">
+                        <div class="progress-bar bg-success" style="width: 85%">85%</div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <span class="fw-semibold">Cisco / Routage</span>
+                    <div class="progress" style="height: 25px;">
+                        <div class="progress-bar bg-success" style="width: 80%">80%</div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <span class="fw-semibold">Cybersécurité</span>
+                    <div class="progress" style="height: 25px;">
+                        <div class="progress-bar bg-info" style="width: 70%">70%</div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <span class="fw-semibold">Linux / Ubuntu</span>
+                    <div class="progress" style="height: 25px;">
+                        <div class="progress-bar bg-success" style="width: 75%">75%</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h5 class="fw-bold mb-3">Développement</h5>
+                <div class="mb-3">
+                    <span class="fw-semibold">PHP / Symfony</span>
+                    <div class="progress" style="height: 25px;">
+                        <div class="progress-bar bg-primary" style="width: 75%">75%</div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <span class="fw-semibold">Python</span>
+                    <div class="progress" style="height: 25px;">
+                        <div class="progress-bar bg-primary" style="width: 70%">70%</div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <span class="fw-semibold">HTML / CSS / JavaScript</span>
+                    <div class="progress" style="height: 25px;">
+                        <div class="progress-bar bg-primary" style="width: 80%">80%</div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <span class="fw-semibold">C / Programmation</span>
+                    <div class="progress" style="height: 25px;">
+                        <div class="progress-bar bg-info" style="width: 65%">65%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <h5 class="fw-bold mb-3">Outils & Technologies</h5>
+                <div class="d-flex flex-wrap gap-2">
+                    <span class="badge bg-dark p-2">Cisco Packet Tracer</span>
+                    <span class="badge bg-dark p-2">Wireshark</span>
+                    <span class="badge bg-dark p-2">GNS3</span>
+                    <span class="badge bg-dark p-2">Git / GitHub</span>
+                    <span class="badge bg-dark p-2">Docker</span>
+                    <span class="badge bg-dark p-2">MySQL</span>
+                    <span class="badge bg-dark p-2">Bootstrap</span>
+                    <span class="badge bg-dark p-2">VS Code</span>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

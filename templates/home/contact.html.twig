@@ -1,0 +1,77 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Formulaire - DA BOIT Maxence{% endblock %}
+
+{% block body %}
+<section class="py-5">
+    <div class="container">
+        <h1 class="display-5 fw-bold text-center mb-5">Télécharger mon CV</h1>
+        
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow-lg">
+                    <div class="card-body p-5">
+                        <p class="lead text-center mb-4">
+                            Remplissez ce formulaire pour télécharger mon CV au format PDF ou DOCX
+                        </p>
+                        
+                        <form id="cvForm">
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Nom *</label>
+                                <input type="text" class="form-control" name="nom" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Prénom *</label>
+                                <input type="text" class="form-control" name="prenom" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Email *</label>
+                                <input type="email" class="form-control" name="email" required>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Entreprise</label>
+                                <input type="text" class="form-control" name="entreprise">
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label class="form-label fw-bold">Format souhaité *</label>
+                                <select class="form-select" name="format" required>
+                                    <option value="">Choisir un format</option>
+                                    <option value="pdf">PDF</option>
+                                    <option value="docx">DOCX</option>
+                                </select>
+                            </div>
+                            
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-download me-2"></i>Télécharger le CV
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+document.getElementById('cvForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const format = this.format.value;
+    const nom = this.nom.value;
+    const prenom = this.prenom.value;
+    
+    alert(`Merci ${prenom} ${nom} ! Le téléchargement de votre CV au format ${format.toUpperCase()} va commencer.`);
+    
+    // Ici vous pouvez ajouter la logique de téléchargement
+    window.print(); // Pour l'instant, ouvre la fenêtre d'impression
+});
+</script>
+{% endblock %}

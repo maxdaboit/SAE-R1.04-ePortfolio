@@ -1,369 +1,92 @@
-{# templates/base.html.twig #}
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}DA BOIT - Portfolio{% endblock %}</title>
+    <title>{% block title %}DA BOIT Maxence - Portfolio{% endblock %}</title>
     
+    {# Bootswatch Theme : LUX #}
+    <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/lux/bootstrap.min.css" rel="stylesheet">
+
+    {# Polices et Icônes #}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        body { font-family: 'Inter', sans-serif; }
+        a { text-decoration: none !important; }
         
-        :root {
-            --bg-primary: #ffffff;
-            --text-primary: #000000;
-            --text-secondary: #666666;
-            --border-color: #e5e5e5;
-            --card-shadow: 0 2px 8px rgba(0,0,0,0.08);
-        }
+        /* Tech Stack Scrolling */
+        .tech-stack-wrapper { overflow: hidden; padding: 40px 0; }
+        .tech-stack { display: flex; gap: 50px; width: max-content; }
+        .tech-item { flex-shrink: 0; }
         
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            font-size: 15px;
-            -webkit-font-smoothing: antialiased;
-        }
+        .project-image { height: 280px; }
+        .project-image.gradient-1 { background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 50%, #e17055 100%); }
+        .project-image.gradient-2 { background: linear-gradient(135deg, #a29bfe 0%, #74b9ff 50%, #81ecec 100%); }
+        .project-image.gradient-3 { background: linear-gradient(135deg, #fd79a8 0%, #fdcb6e 50%, #e17055 100%); }
         
-        /* Header */
-        .header {
-            padding: 2rem 0;
-            border-bottom: 1px solid var(--border-color);
-        }
+        .interest-card { height: 200px; border-radius: 12px; }
+        .interest-card.gradient-1 { background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%); }
+        .interest-card.gradient-2 { background: linear-gradient(135deg, #a29bfe 0%, #74b9ff 100%); }
+        .interest-card.gradient-3 { background: linear-gradient(135deg, #dfe6e9 0%, #b2bec3 100%); }
         
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-        
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
-        
-        .logo-section h1 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-            letter-spacing: -0.02em;
-        }
-        
-        .logo-section p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-        
-        .menu-btn {
-            background: #000;
-            color: #fff;
-            border: none;
-            padding: 0.5rem 1.25rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        
-        .menu-btn:hover {
-            background: #333;
-        }
-        
-        /* University Section */
-        .university-section {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 3rem 0;
-            gap: 2rem;
-        }
-        
-        .university-card {
-            background: #fff;
-            padding: 2.5rem 3rem;
-            border-radius: 12px;
-            box-shadow: var(--card-shadow);
-            text-align: center;
-            min-width: 280px;
-        }
-        
-        .university-logo {
-            width: 120px;
-            height: 80px;
-            margin: 0 auto 1rem;
-            background: linear-gradient(135deg, #4a7c59 0%, #6b9b7f 100%);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            color: white;
-        }
-        
-        .university-card h2 {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-        
-        .university-card p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-        
-        /* Tech Stack - Défilement infini */
-        .tech-stack-wrapper {
-            overflow: hidden;
-            width: 100%;
-            padding: 40px 0;
-        }
-
-        .tech-stack {
-            display: flex;
-            gap: 50px;
-            width: max-content;
-        }
-
-        .tech-item {
-            flex-shrink: 0;
-        }
-    
-        /* Section Titles */
-        .section-title {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 2.5rem;
-            letter-spacing: -0.02em;
-        }
-        
-        /* Footer */
-        .footer {
-            border-top: 1px solid var(--border-color);
-            padding: 3rem 0;
-            margin-top: 5rem;
-        }
-        
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .footer h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-        
-        .social-links {
-            display: flex;
-            gap: 1rem;
-        }
-        
-        .social-links a {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: #f5f5f5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-primary);
-            text-decoration: none;
-            transition: background 0.2s;
-        }
-        
-        .social-links a:hover {
-            background: #e5e5e5;
-        }
-
-        /* Menu Modal */
-        .menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .menu-overlay.active {
-            display: flex;
-        }
-
-        .menu-content {
-            background: white;
-            padding: 3rem;
-            border-radius: 12px;
-            max-width: 500px;
-            width: 90%;
-            position: relative;
-        }
-
-        .menu-close {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: none;
-            border: none;
-            font-size: 2rem;
-            cursor: pointer;
-            color: var(--text-secondary);
-        }
-
-        .menu-links {
-            list-style: none;
-        }
-
-        .menu-links li {
-            margin: 1.5rem 0;
-        }
-
-        .menu-links a {
-            color: var(--text-primary);
-            text-decoration: none;
-            font-size: 1.2rem;
-            font-weight: 500;
-            transition: color 0.2s;
-        }
-
-        .menu-links a:hover {
-            color: var(--text-secondary);
-        }
-        
-        @media (max-width: 768px) {
-            .container {
-                padding: 0 1.5rem;
-            }
-            
-            .university-section {
-                flex-direction: column;
-            }
-            
-            .footer-content {
-                flex-direction: column;
-                gap: 1.5rem;
-                text-align: center;
-            }
-        }
-        a {
-        text-decoration: none !important;
-        }
-
-        a:hover, a:focus, a:active {
-            text-decoration: none !important;
-        }
-
-        .project-card-link {
-            text-decoration: none !important;
-        }
+        .university-logo { width: 240px; height: 160px; margin: 0 auto; }
+        .university-logo img { width: 100%; height: 100%; object-fit: contain; }
     </style>
     
     {% block stylesheets %}{% endblock %}
 </head>
 <body>
-    {# Header #}
-    <header class="header">
+    {# Navigation #}
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
-            <div class="header-content">
-                <div class="logo-section">
-                    <h1>DA BOIT</h1>
-                    <p>Maxence</p>
-                </div>
-                <button class="menu-btn">Menu</button>
+            <a class="navbar-brand fw-bold" href="{{ path('app_home') }}">DA BOIT Maxence</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="{{ path('app_home') }}">Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ path('app_cv') }}">CV</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ path('app_eportfolio') }}">E-Portfolio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ path('app_passions') }}">Mes Passions</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ path('app_contact') }}">Formulaire</a></li>
+                </ul>
             </div>
         </div>
-    </header>
-    .project-card-link {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-    }
-
-    .project-card-link:hover {
-        text-decoration: none;
-    }
-
-.project-card {
-    cursor: pointer;
-}
+    </nav>
 
     {# Main Content #}
     <main>
         {% block body %}{% endblock %}
     </main>
 
-    {# Footer #}
-    <footer class="footer">
+    {# Footer avec protection copyright - OBLIGATOIRE cahier des charges #}
+    <footer class="bg-dark text-white py-4 mt-5">
         <div class="container">
-            <div class="footer-content">
-                <h3>Let's work together</h3>
-                <div class="social-links">
-                    <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
-                    <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                    <a href="#" title="Email"><i class="fas fa-envelope"></i></a>
-                    <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="fw-bold">DA BOIT Maxence</h5>
+                    <p class="mb-2">Étudiant en BUT R&T - IUT de Roanne</p>
+                    <p class="small mb-0">Groupe TP: {{ groupe_tp|default('B1') }}</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <p class="mb-2">
+                        <a href="#" class="text-white me-3"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-github"></i></a>
+                        <a href="mailto:contact@daboit.fr" class="text-white"><i class="fas fa-envelope"></i></a>
+                    </p>
+                    <p class="small mb-1">© {{ "now"|date("Y") }} DA BOIT Maxence. Tous droits réservés.</p>
+                    <p class="small mb-0">Ce site et son contenu sont protégés par le droit d'auteur.</p>
+                    <p class="small">Toute reproduction interdite sans autorisation.</p>
                 </div>
             </div>
         </div>
     </footer>
 
-    {# Menu Modal #}
-    <div class="menu-overlay" id="menuOverlay">
-        <div class="menu-content">
-            <button class="menu-close" id="menuClose">&times;</button>
-            <ul class="menu-links">
-                <li><a href="#portfolio">Portfolio</a></li>
-                <li><a href="#about">À propos</a></li>
-                <li><a href="#interests">Centres d'intérêt</a></li>
-                <li><a href="#education">Formation</a></li>
-            </ul>
-        </div>
-    </div>
-
-    <script>
-    const menuBtn = document.querySelector('.menu-btn');
-    const menuOverlay = document.getElementById('menuOverlay');
-    const menuClose = document.getElementById('menuClose');
-
-    if (menuBtn && menuOverlay && menuClose) {
-        menuBtn.addEventListener('click', () => {
-            menuOverlay.classList.add('active');
-        });
-
-        menuClose.addEventListener('click', () => {
-            menuOverlay.classList.remove('active');
-        });
-
-        menuOverlay.addEventListener('click', (e) => {
-            if (e.target === menuOverlay) {
-                menuOverlay.classList.remove('active');
-            }
-        });
-
-        // Fermer le menu quand on clique sur un lien
-        document.querySelectorAll('.menu-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                menuOverlay.classList.remove('active');
-            });
-        });
-    }
-    </script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     {% block javascripts %}{% endblock %}
 </body>
 </html>

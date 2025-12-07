@@ -37,7 +37,7 @@ class HomeController extends AbstractController
     {
         return $this->render('home/index.html.twig', [
             'projects' => $this->getProjects(),
-            'groupe_tp' => 'TP2',
+            'groupe_tp' => 'B1',
         ]);
     }
 

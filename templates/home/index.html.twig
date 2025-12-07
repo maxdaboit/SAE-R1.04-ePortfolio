@@ -1,37 +1,266 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Accueil - DA BOIT Maxence{% endblock %}
+{% block title %}DA BOIT Maxence - Étudiant R&T{% endblock %}
+
+{% block stylesheets %}
+<style>
+    /* Hero Section */
+    .hero-section {
+        text-align: left;
+        padding: 1rem 0 2rem;
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+    }
+    
+    .hero-subtitle {
+        color: var(--text-secondary);
+        font-size: 1rem;
+    }
+
+    /* Phrase de présentation - OBLIGATOIRE cahier des charges */
+    .presentation-phrase {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 0 2rem;
+        text-align: left;
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: var(--text-secondary);
+    }
+    
+    /* Portfolio Section */
+    .portfolio-section {
+        padding: 3rem 0;
+    }
+    
+    .projects-grid {
+        display: grid;
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+    
+    .project-card {
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: var(--card-shadow);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .project-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+    
+    .project-image {
+        width: 100%;
+        height: 280px;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .project-image.gradient-1 {
+        background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 50%, #e17055 100%);
+    }
+    
+    .project-image.gradient-2 {
+        background: linear-gradient(135deg, #a29bfe 0%, #74b9ff 50%, #81ecec 100%);
+    }
+    
+    .project-image.gradient-3 {
+        background: linear-gradient(135deg, #fd79a8 0%, #fdcb6e 50%, #e17055 100%);
+    }
+    
+    .project-content {
+        padding: 1.5rem;
+    }
+    
+    .project-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+    
+    .project-description {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+    
+    /* About Section */
+    .about-section {
+        padding: 3rem 0;
+    }
+    
+    .about-content {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        gap: 3rem;
+        align-items: start;
+        margin-top: 2rem;
+    }
+    
+    .about-image {
+        width: 100%;
+        height: 320px;
+        background: linear-gradient(135deg, #c3f7c3 0%, #b8f3b8 100%);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 4rem;
+        box-shadow: var(--card-shadow);
+    }
+    
+    .about-text h3 {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+    
+    .about-text p {
+        color: var(--text-secondary);
+        line-height: 1.8;
+        margin-bottom: 1rem;
+    }
+    
+    /* Interests Section */
+    .interests-section {
+        padding: 3rem 0;
+    }
+    
+    .interests-section h3 {
+        font-size: 1.3rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+    }
+    
+    .interests-section p {
+        color: var(--text-secondary);
+        line-height: 1.8;
+        margin-bottom: 2rem;
+    }
+    
+    .interests-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+    
+    .interest-card {
+        height: 200px;
+        border-radius: 12px;
+        box-shadow: var(--card-shadow);
+    }
+    
+    .interest-card.gradient-1 {
+        background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 100%);
+    }
+    
+    .interest-card.gradient-2 {
+        background: linear-gradient(135deg, #a29bfe 0%, #74b9ff 100%);
+    }
+    
+    .interest-card.gradient-3 {
+        background: linear-gradient(135deg, #dfe6e9 0%, #b2bec3 100%);
+    }
+    
+    /* Education Section */
+    .education-section {
+        padding: 3rem 0;
+    }
+    
+    .education-list {
+        margin-top: 2rem;
+    }
+    
+    .education-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem 0;
+        border-bottom: 1px solid var(--border-color);
+    }
+    
+    .education-item:last-child {
+        border-bottom: none;
+    }
+    
+    .education-title {
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
+    
+    .education-year {
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+    }
+    
+    @media (max-width: 968px) {
+        .about-content {
+            grid-template-columns: 1fr;
+        }
+        
+        .interests-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
 
 {% block body %}
-{# Hero Section avec informations personnelles - OBLIGATOIRE #}
-<section class="bg-light py-5">
-    <div class="container text-center">
-        <h1 class="display-4 fw-bold">DA BOIT Maxence</h1>
-        <p class="lead text-muted">Groupe TP: TP2</p>
-        <p class="fs-5 mt-4">
-            Étudiant passionné en Réseaux & Télécommunications à l'IUT de Roanne, 
-            je développe mes compétences en administration réseau, connectivité 
-            et développement d'applications pour les infrastructures IT.
-        </p>
-        <div class="university-logo mt-4">
-            <img src="{{ asset('Image/Image IUT/IUT.ROANNE-LOGO-NOIR.png') }}" alt="IUT de Roanne" class="img-fluid">
+{# University Section avec infos personnelles - OBLIGATOIRE #}
+<div class="university-section">
+    <div class="hero-section">
+        <h1 class="hero-title">DA BOIT Maxence</h1>
+        <p class="hero-subtitle">Étudiant en R&T - Groupe: {{ groupe_tp }}</p>
+        <p class="hero-subtitle">IUT de Roanne</p>
+    </div>
+    
+    <div class="university-card">
+        <div class="mac-titlebar">
+            <div class="mac-buttons">
+                <div class="mac-button red"></div>
+                <div class="mac-button yellow"></div>
+                <div class="mac-button green"></div>
+            </div>
+        </div>
+        <div class="university-card-content">
+            <div class="university-logo">
+                <img src="{{ asset('Image/Image IUT/IUT.ROANNE-LOGO-NOIR.png') }}" alt="IUT de Roanne">
+            </div>
         </div>
     </div>
-</section>
+</div>
+
+{# Phrase de présentation - OBLIGATOIRE cahier des charges #}
+<div class="presentation-phrase">
+    <p>
+        Étudiant passionné en Réseaux & Télécommunications, je développe mes compétences 
+        en administration système, cybersécurité et développement d'applications. 
+        Mon objectif est de devenir Administrateur Réseaux & Télécommunications 
+        et de contribuer à la sécurisation des infrastructures IT.
+    </p>
+</div>
 
 {# Container "Pour en savoir plus" - OBLIGATOIRE cahier des charges #}
-<section class="py-5">
-    <div class="container">
+<section class="py-4">
+    <div class="container-custom">
         <div class="card border-primary shadow-lg">
             <div class="card-header bg-primary text-white">
                 <h2 class="h4 mb-0">Pour en savoir plus</h2>
             </div>
             <div class="card-body">
                 <p class="card-text">
-                    Découvrez mes passions, mes loisirs et mes projets personnels. 
-                    Cette section vous permettra de mieux me connaître au-delà de mon parcours académique et professionnel.
+                    Découvrez mes passions, mes loisirs et mes projets personnels à travers des photos et descriptions. 
+                    Une page dédiée pour mieux me connaître au-delà de mon parcours professionnel !
                 </p>
-                <a href="{{ path('app_passions') }}" class="btn btn-primary btn-lg">
+                <a href="{{ path('app_passions') }}" class="btn btn-primary btn-lg mt-2">
                     <i class="fas fa-arrow-right me-2"></i>Découvrir mes passions
                 </a>
             </div>
@@ -39,42 +268,89 @@
     </div>
 </section>
 
-{# Tech Stack Défilant #}
-<section class="bg-light">
-    <div class="tech-stack-wrapper">
-        <div class="tech-stack" id="techStack">
-            {% for tech in ['cisco', 'c', 'python', 'symfony', 'html', 'css', 'ubuntu'] %}
-            <div class="tech-item">
-                <img src="{{ asset('Image/' ~ tech ~ '.png') }}" alt="{{ tech }}" width="50" height="50">
-            </div>
+{# Tech Stack #}
+<div class="tech-stack-wrapper">
+    <div class="tech-stack" id="techStack">
+        <div class="tech-item"><img src="{{ asset('Image/cisco.png') }}" alt="Cisco" width="50" height="50"></div>
+        <div class="tech-item"><img src="{{ asset('Image/c.png') }}" alt="C" width="50" height="50"></div>
+        <div class="tech-item"><img src="{{ asset('Image/python.png') }}" alt="Python" width="50" height="50"></div>
+        <div class="tech-item"><img src="{{ asset('Image/symfony.png') }}" alt="Symfony" width="50" height="50"></div>
+        <div class="tech-item"><img src="{{ asset('Image/html.png') }}" alt="HTML" width="50" height="50"></div>
+        <div class="tech-item"><img src="{{ asset('Image/css.png') }}" alt="CSS" width="50" height="50"></div>
+        <div class="tech-item"><img src="{{ asset('Image/ubuntu.png') }}" alt="Ubuntu" width="50" height="50"></div>
+    </div>
+</div>
+
+{# Portfolio Section #}
+<section class="portfolio-section" id="portfolio">
+    <div class="container-custom">
+        <h2 class="section-title">Portfolio</h2>
+        
+        <div class="projects-grid">
+            {% for project in projects %}
+            <a href="{{ path('app_project_detail', {id: project.id}) }}" class="project-card-link">
+                <div class="project-card">
+                    <div class="project-image {{ project.gradient }}"></div>
+                    <div class="project-content">
+                        <h3 class="project-title">{{ project.title }}</h3>
+                        <p class="project-description">{{ project.description }}</p>
+                    </div>
+                </div>
+            </a>
             {% endfor %}
         </div>
     </div>
 </section>
 
-{# Aperçu Portfolio #}
-<section class="py-5">
-    <div class="container">
-        <h2 class="display-6 fw-bold mb-4">Mes Projets</h2>
-        <div class="row g-4">
-            {% for project in projects|slice(0, 3) %}
-            <div class="col-md-4">
-                <a href="{{ path('app_project_detail', {id: project.id}) }}" class="text-decoration-none">
-                    <div class="card h-100 shadow-sm border-0">
-                        <div class="project-image {{ project.gradient }} rounded-top"></div>
-                        <div class="card-body">
-                            <h3 class="h5 fw-semibold">{{ project.title }}</h3>
-                            <p class="text-muted small mb-0">{{ project.description }}</p>
-                        </div>
-                    </div>
-                </a>
+{# About Section #}
+<section class="about-section" id="about">
+    <div class="container-custom">
+        <h2 class="section-title">À propos de moi</h2>
+        
+        <div class="about-content">
+            <div class="about-image">
+                👤
             </div>
-            {% endfor %}
+            <div class="about-text">
+                <h3>Introduction</h3>
+                <p>Actuellement en BUT Réseaux & Télécommunications à l'IUT de Roanne, je me passionne pour l'administration système, la cybersécurité et le développement d'applications. Mon parcours atypique, incluant une formation en menuiserie et un Bac Pro SEN, m'a appris la rigueur et la persévérance.</p>
+                <p>Mon objectif professionnel est de devenir Administrateur Réseaux & Télécommunications dans une entreprise innovante où je pourrai mettre en pratique mes compétences techniques tout en continuant à apprendre.</p>
+            </div>
         </div>
-        <div class="text-center mt-4">
-            <a href="{{ path('app_eportfolio') }}" class="btn btn-outline-primary btn-lg">
-                Voir tout mon E-Portfolio
-            </a>
+    </div>
+</section>
+
+{# Interests Section #}
+<section class="interests-section" id="interests">
+    <div class="container-custom">
+        <h3>Centres d'intérêt et loisirs</h3>
+        <p>Au-delà de ma formation, je cultive plusieurs passions qui enrichissent mon quotidien et développent ma créativité.</p>
+        
+        <div class="interests-grid">
+            <div class="interest-card gradient-1"></div>
+            <div class="interest-card gradient-2"></div>
+            <div class="interest-card gradient-3"></div>
+        </div>
+    </div>
+</section>
+
+{# Education Section #}
+<section class="education-section" id="education">
+    <div class="container-custom">
+        <h2 class="section-title">Formation</h2>
+        <div class="education-list">
+            <div class="education-item">
+                <h3 class="education-title">BUT R&T - IUT de Roanne</h3>
+                <span class="education-year">2023 - 2025</span>
+            </div>
+            <div class="education-item">
+                <h3 class="education-title">CAP Menuiserie</h3>
+                <span class="education-year">2020 - 2022</span>
+            </div>
+            <div class="education-item">
+                <h3 class="education-title">Bac Pro SEN - Lycée ARAGO Roanne</h3>
+                <span class="education-year">2016 - 2019</span>
+            </div>
         </div>
     </div>
 </section>
@@ -82,12 +358,18 @@
 
 {% block javascripts %}
 <script>
+// Animation défilement logos
 const stack = document.getElementById('techStack');
-stack.innerHTML += stack.innerHTML + stack.innerHTML;
+const items = stack.innerHTML;
+stack.innerHTML = items + items + items;
+
 let scrollPos = 0;
+const speed = 1;
+
 function animate() {
-    scrollPos += 1;
-    if (scrollPos >= stack.scrollWidth / 3) scrollPos = 0;
+    scrollPos += speed;
+    const maxScroll = stack.scrollWidth / 3;
+    if (scrollPos >= maxScroll) scrollPos = 0;
     stack.style.transform = `translateX(-${scrollPos}px)`;
     requestAnimationFrame(animate);
 }

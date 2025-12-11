@@ -1,199 +1,209 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ project.title }} - DA BOIT{% endblock %}
+{% block title %}{{ project.title }} - Portfolio{% endblock %}
 
 {% block stylesheets %}
 <style>
-    .project-detail {
-        padding: 4rem 0;
+    /* --- RÉUTILISATION DU STYLE BENTO (Index) --- */
+    :root {
+        --bg-color: #ffffff;
+        --card-bg: #f8f9fa;
+        --accent-color: #5227FF;
+        --text-primary: #111;
+        --text-secondary: #666;
+        --radius: 28px;
     }
 
-    .back-link {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        color: var(--text-secondary);
-        text-decoration: none;
-        margin-bottom: 2rem;
-        font-size: 0.95rem;
-        transition: color 0.2s;
-    }
-
-    .back-link:hover {
+    body {
+        background-color: var(--bg-color);
         color: var(--text-primary);
     }
 
-    .project-header {
-        margin-bottom: 3rem;
+    .bento-grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 1.5rem;
+        padding: 2rem 0;
+        max-width: 1200px;
+        margin: 0 auto;
     }
 
-    .project-hero {
-        width: 100%;
-        height: 400px;
-        border-radius: 12px;
-        margin-bottom: 2rem;
-        box-shadow: var(--card-shadow);
-    }
-
-    .project-hero.gradient-1 {
-        background: linear-gradient(135deg, #ffeaa7 0%, #fab1a0 50%, #e17055 100%);
-    }
-
-    .project-hero.gradient-2 {
-        background: linear-gradient(135deg, #a29bfe 0%, #74b9ff 50%, #81ecec 100%);
-    }
-
-    .project-hero.gradient-3 {
-        background: linear-gradient(135deg, #fd79a8 0%, #fdcb6e 50%, #e17055 100%);
-    }
-
-    .project-meta {
-        display: flex;
-        gap: 2rem;
-        margin-bottom: 2rem;
-        flex-wrap: wrap;
-    }
-
-    .meta-item {
+    .bento-card {
+        background: var(--card-bg);
+        border-radius: var(--radius);
+        padding: 2.5rem;
+        border: 1px solid rgba(0,0,0,0.03);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        overflow: hidden;
+        position: relative;
         display: flex;
         flex-direction: column;
+        justify-content: center;
+    }
+    
+    .bento-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        border-color: rgba(0,0,0,0.08);
     }
 
-    .meta-label {
-        font-size: 0.85rem;
+    /* Colonnes */
+    .col-span-12 { grid-column: span 12; }
+    .col-span-8 { grid-column: span 8; }
+    .col-span-6 { grid-column: span 6; }
+    .col-span-4 { grid-column: span 4; }
+
+    @media (max-width: 968px) {
+        .col-span-8, .col-span-6, .col-span-4 { grid-column: span 12; }
+    }
+
+    /* --- STYLES SPÉCIFIQUES PROJET --- */
+    
+    /* Bouton Retour */
+    .back-btn {
+        display: inline-flex; align-items: center; gap: 0.5rem;
+        padding: 0.8rem 1.5rem;
+        background: #fff; border: 1px solid #eee;
+        border-radius: 50px; text-decoration: none;
+        color: var(--text-primary); font-weight: 600; font-size: 0.9rem;
+        transition: all 0.2s; margin-bottom: 2rem;
+    }
+    .back-btn:hover { background: var(--text-primary); color: #fff; border-color: var(--text-primary); }
+
+    /* Typographie */
+    h1 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 1rem; }
+    h2 { font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; color: var(--text-primary); }
+    p { color: var(--text-secondary); line-height: 1.8; font-size: 1rem; }
+
+    /* Carte Visuelle (Gradient) */
+    .visual-card { min-height: 250px; width: 100%; height: 100%; }
+    .gradient-1 { background: linear-gradient(135deg, #FF9A9E 0%, #FECFEF 100%); }
+    .gradient-2 { background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%); }
+    .gradient-3 { background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%); }
+
+    /* Métadonnées (Date, Durée) */
+    .meta-row { display: flex; justify-content: space-between; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 1rem; margin-bottom: 1rem; }
+    .meta-label { font-size: 0.85rem; color: #999; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
+    .meta-value { font-weight: 700; font-size: 1rem; }
+
+    /* Tags Tech */
+    .tech-pill {
+        display: inline-block; padding: 0.4rem 0.9rem;
+        background: #fff; border: 1px solid rgba(0,0,0,0.08);
+        border-radius: 50px; font-size: 0.85rem; font-weight: 500;
+        margin: 0 0.4rem 0.4rem 0; color: var(--text-secondary);
+    }
+
+    /* Listes (Défis & Résultats) */
+    .custom-list { list-style: none; padding: 0; margin: 0; }
+    .custom-list li {
+        padding: 0.8rem 0;
+        border-bottom: 1px solid rgba(0,0,0,0.03);
         color: var(--text-secondary);
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        margin-bottom: 0.25rem;
+        display: flex; align-items: start; gap: 10px;
     }
-
-    .meta-value {
-        font-size: 1rem;
-        font-weight: 600;
+    .custom-list li:last-child { border-bottom: none; }
+    .custom-list li::before {
+        content: "→"; color: var(--accent-color); font-weight: bold;
     }
-
-    .project-content-section {
-        margin-bottom: 3rem;
-    }
-
-    .project-content-section h2 {
-        font-size: 1.5rem;
-        font-weight: 600;
-        margin-bottom: 1rem;
-    }
-
-    .project-content-section p {
-        color: var(--text-secondary);
-        line-height: 1.8;
-        margin-bottom: 1rem;
-    }
-
-    .tech-tags {
-        display: flex;
-        gap: 0.75rem;
-        flex-wrap: wrap;
-    }
-
-    .tech-tag {
-        background: #f5f5f5;
-        padding: 0.5rem 1rem;
-        border-radius: 20px;
-        font-size: 0.9rem;
-        font-weight: 500;
-    }
-
-    .project-list {
-        list-style: none;
-        padding: 0;
-    }
-
-    .project-list li {
-        padding: 0.75rem 0;
-        padding-left: 1.5rem;
-        position: relative;
-        color: var(--text-secondary);
-        line-height: 1.6;
-    }
-
-    .project-list li:before {
-        content: "✓";
-        position: absolute;
-        left: 0;
-        color: #4a7c59;
-        font-weight: bold;
-    }
-
-    @media (max-width: 768px) {
-        .project-hero {
-            height: 250px;
-        }
-
-        .project-meta {
-            gap: 1rem;
-        }
+    
+    /* Image overlay */
+    .project-logo {
+        width: 80px; height: 80px; background: white;
+        border-radius: 20px; display: flex; align-items: center; justify-content: center;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        font-size: 2rem;
     }
 </style>
 {% endblock %}
 
 {% block body %}
-<section class="project-detail">
-    <div class="container">
-        <a href="{{ path('app_home') }}#portfolio" class="back-link">
-            ← Retour au portfolio
+<section class="py-5">
+    <div class="container-custom">
+        
+        {# Navigation #}
+        <a href="{{ path('app_home') }}#portfolio" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Retour
         </a>
 
-        <div class="project-header">
-            <div class="project-hero {{ project.gradient }}"></div>
-            
-            <h1 class="section-title">{{ project.title }}</h1>
-            
-            <div class="project-meta">
-                <div class="meta-item">
+        <div class="bento-grid">
+
+            {# --- 1. TITRE & INTRO (Grande carte gauche) --- #}
+            <div class="bento-card col-span-8">
+                <span class="meta-label mb-2" style="color: var(--accent-color);">Projet R&T</span>
+                <h1>{{ project.title }}</h1>
+                <p class="mb-0">{{ project.description }}</p>
+            </div>
+
+            {# --- 2. VISUEL (Carte droite) --- #}
+            <div class="bento-card col-span-4 p-0 border-0">
+                <div class="visual-card {{ project.gradient }} d-flex align-items-center justify-content-center">
+                    {# Si tu as une image spécifique, on peut l'afficher, sinon une icône ou rien #}
+                    <div class="project-logo">
+                        {% if project.imageFilename is defined and project.imageFilename %}
+                            <img src="{{ asset('Image/' ~ project.imageFilename) }}" alt="Logo" style="width: 50px; height: 50px; object-fit: contain;">
+                        {% else %}
+                            📁
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            {# --- 3. INFOS & TECH (Colonne Latérale Droite) --- #}
+            <div class="bento-card col-span-4" style="grid-row: span 2;">
+                <h2 class="mb-4">Détails</h2>
+                
+                <div class="meta-row">
                     <span class="meta-label">Date</span>
                     <span class="meta-value">{{ project.date }}</span>
                 </div>
-                <div class="meta-item">
+                
+                <div class="meta-row">
                     <span class="meta-label">Durée</span>
                     <span class="meta-value">{{ project.duration }}</span>
                 </div>
+
+                <div class="mt-4">
+                    <span class="meta-label d-block mb-3">Technologies</span>
+                    <div>
+                        {% for tech in project.technologies %}
+                            <span class="tech-pill">{{ tech }}</span>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
-        </div>
 
-        <div class="project-content-section">
-            <h2>Description du projet</h2>
-            <p>{{ project.full_description }}</p>
-        </div>
-
-        <div class="project-content-section">
-            <h2>Technologies utilisées</h2>
-            <div class="tech-tags">
-                {% for tech in project.technologies %}
-                    <span class="tech-tag">{{ tech }}</span>
-                {% endfor %}
+            {# --- 4. DESCRIPTION DÉTAILLÉE (Grande carte centrale) --- #}
+            <div class="bento-card col-span-8">
+                <h2>Contexte & Réalisation</h2>
+                <p style="white-space: pre-line;">{{ project.full_description }}</p>
             </div>
-        </div>
 
-        {% if project.challenges is not empty %}
-        <div class="project-content-section">
-            <h2>Défis rencontrés</h2>
-            <ul class="project-list">
-                {% for challenge in project.challenges %}
-                    <li>{{ challenge }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-        {% endif %}
+            {# --- 5. DÉFIS (Carte bas gauche) --- #}
+            {% if project.challenges is not empty %}
+            <div class="bento-card col-span-6">
+                <h2>⚡ Défis rencontrés</h2>
+                <ul class="custom-list">
+                    {% for challenge in project.challenges %}
+                        <li>{{ challenge }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
 
-        {% if project.results is not empty %}
-        <div class="project-content-section">
-            <h2>Résultats obtenus</h2>
-            <ul class="project-list">
-                {% for result in project.results %}
-                    <li>{{ result }}</li>
-                {% endfor %}
-            </ul>
+            {# --- 6. RÉSULTATS (Carte bas droite) --- #}
+            {% if project.results is not empty %}
+            <div class="bento-card col-span-6">
+                <h2>🏆 Résultats obtenus</h2>
+                <ul class="custom-list">
+                    {% for result in project.results %}
+                        <li>{{ result }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
         </div>
-        {% endif %}
     </div>
 </section>
 {% endblock %}

@@ -176,8 +176,7 @@
         {# --- 2. LOGO CARD --- #}
         <div class="bento-card col-span-4 d-flex align-items-center justify-content-center" style="background: #e9ecef;">
             <div style="text-align: center;">
-                <img src="{{ asset('Image/Image IUT/IUT.ROANNE-LOGO-NOIR.png') }}" alt="IUT Logo" style="max-width: 180px; opacity: 0.8;">
-                <p class="mt-3 text-muted small">Groupe {{ groupe_tp|default('TP2') }}</p>
+                <img src="{{ asset('Image/Image IUT/IUT.ROANNE-LOGO-NOIR.png') }}" alt="IUT Logo" style="max-width: 360px; opacity: 0.8;">
             </div>
         </div>
 
@@ -213,7 +212,7 @@
                         ] %}
                         {% set cfg = configs[loop.index0] %}
                         <a href="{{ path('app_project_detail', {id: project.id}) }}" class="paper" 
-                            data-base-x="{{ cfg.x }}" data-base-y="{{ cfg.y }}" data-rotate="{{ cfg.r }}">
+                           data-base-x="{{ cfg.x }}" data-base-y="{{ cfg.y }}" data-rotate="{{ cfg.r }}">
                             <div class="paper-img" style="background-image: url('{{ asset('Image/' ~ project.imageFilename|default('symfony.png')) }}');"></div>
                             <div class="paper-info"><span class="paper-title">{{ project.title }}</span></div>
                         </a>
@@ -225,26 +224,29 @@
             <a href="{{ path('app_eportfolio') }}" style="position: absolute; bottom: 2rem; right: 2rem;" class="btn btn-sm btn-outline-dark rounded-pill">Tout voir</a>
         </div>
 
-        {# --- 5. PASSIONS --- #}
+        {# --- 5. PASSIONS (MODIFIÉ) --- #}
         <div class="bento-card col-span-6">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h2>Ce qui m'anime</h2>
                 <a href="{{ path('app_passions') }}" class="small text-muted">Voir détails →</a>
             </div>
             <div class="row g-3">
+                
                 <div class="col-4">
-                    <a href="{{ path('app_passions') }}" class="passion-card gradient-1">
-                        <span class="passion-label">Tech</span>
+                    <a href="{{ path('app_japanese') }}" class="passion-card gradient-1">
+                        <span class="passion-label">日本語</span>
                     </a>
                 </div>
+
                 <div class="col-4">
-                    <a href="{{ path('app_passions') }}" class="passion-card gradient-2">
-                        <span class="passion-label">Dev</span>
+                    <a href="{{ path('app_linux') }}" class="passion-card" style="background: linear-gradient(135deg, #1a1b26 0%, #000 100%); border: 1px solid #333;">
+                        <span class="passion-label" style="color: #9ece6a;">Linux</span>
                     </a>
                 </div>
+
                 <div class="col-4">
-                    <a href="{{ path('app_passions') }}" class="passion-card gradient-3">
-                        <span class="passion-label">Bois</span>
+                    <a href="{{ path('app_blender') }}" class="passion-card" style="background: linear-gradient(135deg, #e67e22 0%, #f39c12 100%);">
+                        <span class="passion-label">Blender</span>
                     </a>
                 </div>
             </div>
@@ -284,7 +286,7 @@
 {% block javascripts %}
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // --- 1. GESTION DU DOSSIER (CORRIGÉE) ---
+        // --- 1. GESTION DU DOSSIER ---
         const folder = document.getElementById('myFolder');
         if(folder) {
             const papers = folder.querySelectorAll('.paper');

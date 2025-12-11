@@ -1,0 +1,111 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Unix Ricing - DA BOIT Maxence{% endblock %}
+
+{% block stylesheets %}
+<style>
+    /* --- Thème Spécifique LINUX (Dark Mode) --- */
+    :root {
+        --bg-color: #0f0f12;         /* Fond très sombre */
+        --card-bg: #1a1b26;          /* Fond des cartes (type Tokyo Night) */
+        --text-primary: #a9b1d6;     /* Texte gris clair */
+        --text-secondary: #7aa2f7;   /* Bleu néon pour les accents */
+        --radius: 28px;
+        --accent-term: #9ece6a;      /* Vert terminal */
+    }
+
+    /* Override global body pour cette page uniquement */
+    body { background-color: var(--bg-color); color: var(--text-primary); }
+    
+    /* Titres en blanc */
+    h1, h2, h3 { color: #fff; }
+    .badge { border: 1px solid var(--text-secondary); color: var(--text-secondary); background: transparent; }
+
+    /* --- Style du Faux Terminal --- */
+    .terminal-window {
+        background: #24283b;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        border: 1px solid #414868;
+        font-family: 'JetBrains Mono', 'Fira Code', monospace;
+        width: 100%; height: 100%;
+        display: flex; flex-direction: column;
+        overflow: hidden;
+    }
+    .terminal-header {
+        background: #1f2335; padding: 10px 15px;
+        display: flex; align-items: center; gap: 8px;
+    }
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .red { background: #f7768e; } .yellow { background: #e0af68; } .green { background: #9ece6a; }
+    
+    .terminal-body { padding: 1.5rem; font-size: 0.85rem; line-height: 1.6; color: #c0caf5; }
+    .cmd { color: var(--accent-term); font-weight: bold; margin-right: 8px; }
+    .path { color: #7aa2f7; font-weight: bold; }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container-custom" style="max-width: 1200px; margin: 0 auto; padding: 2rem;">
+    
+    <a href="{{ path('app_passions') }}" style="text-decoration: none; color: var(--text-secondary); font-weight: 500; margin-bottom: 2rem; display: block;">
+        ← Retour aux passions
+    </a>
+
+    <div class="bento-grid">
+
+        <div class="bento-card col-span-8 d-flex flex-column justify-content-center">
+            <span class="badge mb-3" style="width: fit-content;">System Architecture</span>
+            <h1 class="big-title" style="margin-bottom: 0.5rem;">Unix <span style="color: var(--accent-term);">Ricing</span></h1>
+            <p style="font-size: 1.1rem; opacity: 0.8;">
+                L'art de l'efficacité : créer un environnement de travail où chaque pixel et chaque raccourci clavier est optimisé.
+            </p>
+        </div>
+
+        <div class="bento-card col-span-4 p-0" style="border:none; background: transparent;">
+            <div class="terminal-window">
+                <div class="terminal-header">
+                    <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+                </div>
+                <div class="terminal-body">
+                    <div><span class="cmd">user@arch</span><span class="path">~ $</span> neofetch</div>
+                    <div style="margin-top: 10px; opacity: 0.9;">
+                        OS: Arch Linux x86_64<br>
+                        Host: ROG Strix<br>
+                        Kernel: 6.6.7-arch1-1<br>
+                        WM: Hyprland (Wayland)<br>
+                        Shell: zsh 5.9<br>
+                        Term: Alacritty<br>
+                    </div>
+                    <div style="margin-top: 10px;"><span class="cmd">user@arch</span><span class="path">~ $</span> _</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bento-card col-span-6">
+            <h3>Pourquoi Arch Linux ?</h3>
+            <p class="mt-3" style="opacity: 0.7;">
+                Je ne cherche pas seulement à "utiliser" un ordinateur, je veux comprendre comment il fonctionne. 
+            </p>
+            <ul style="opacity: 0.7; padding-left: 1rem;">
+                <li><strong>Minimalisme :</strong> Installation de base uniquement, j'ajoute ce dont j'ai besoin.</li>
+                <li><strong>Workflow Clavier :</strong> Utilisation d'un Tiling Window Manager (Hyprland) pour ne jamais toucher la souris.</li>
+                <li><strong>Automatisation :</strong> Scripts Bash/Python pour les tâches répétitives.</li>
+            </ul>
+        </div>
+
+        <div class="bento-card col-span-6 d-flex flex-column justify-content-between">
+            <div>
+                <h3>Mes Dotfiles</h3>
+                <p class="mt-2" style="opacity: 0.7;">
+                    Mes fichiers de configuration sont versionnés sur GitHub. Ils définissent tout : des raccourcis clavier aux palettes de couleurs.
+                </p>
+            </div>
+            <a href="https://github.com" target="_blank" class="btn btn-outline-light w-100 mt-3">
+                <i class="fab fa-github"></i> Voir le repo sur GitHub
+            </a>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

@@ -75,4 +75,57 @@ class HomeController extends AbstractController
             'project' => [], // Votre logique existante
         ]);
     }
+    #[Route('/passion/{id}', name: 'app_passion_detail')]
+public function passionDetail(int $id): Response
+{
+    $passions = [
+        1 => [
+            'id' => 1,
+            'title' => 'Technologie & Innovation',
+            'gradient' => 'gradient-1',
+            'description' => 'Ma passion pour la technologie et l\'innovation me pousse à explorer constamment les dernières avancées en matière de réseaux, cybersécurité et systèmes informatiques.',
+            'content' => [
+                'Je suis fasciné par l\'évolution rapide des technologies réseau et leur impact sur notre quotidien.',
+                'Je passe beaucoup de temps à me former sur les nouvelles solutions de cybersécurité et les architectures réseau modernes.',
+                'La veille technologique fait partie intégrante de ma routine pour rester à jour dans ce domaine en constante évolution.',
+            ],
+            'skills' => ['Réseaux', 'Cybersécurité', 'Cloud Computing', 'IoT'],
+        ],
+        2 => [
+            'id' => 2,
+            'title' => 'Développement Web',
+            'gradient' => 'gradient-2',
+            'description' => 'Le développement web est une passion qui me permet d\'allier créativité et compétences techniques pour créer des applications modernes et intuitives.',
+            'content' => [
+                'J\'apprécie particulièrement le développement full-stack avec Symfony et les frameworks JavaScript modernes.',
+                'La création d\'interfaces utilisateur responsive et accessibles est un défi que je relève avec plaisir.',
+                'Chaque projet est une opportunité d\'apprendre de nouvelles techniques et d\'améliorer mes compétences.',
+            ],
+            'skills' => ['Symfony', 'PHP', 'JavaScript', 'HTML/CSS', 'Bootstrap'],
+        ],
+        3 => [
+            'id' => 3,
+            'title' => 'Menuiserie',
+            'gradient' => 'gradient-3',
+            'description' => 'La menuiserie est mon hobby créatif qui me permet de travailler de mes mains et de créer des objets concrets et durables.',
+            'content' => [
+                'Cette passion complémentaire à l\'informatique me permet de garder un équilibre et de développer ma créativité.',
+                'J\'aime la précision et la patience qu\'exige le travail du bois, des qualités transférables à mon métier de technicien réseau.',
+                'Créer quelque chose de tangible est extrêmement satisfaisant et me permet de déconnecter du monde numérique.',
+            ],
+            'skills' => ['Travail du bois', 'Précision', 'Créativité', 'Patience'],
+        ],
+    ];
+
+    if (!isset($passions[$id])) {
+        throw $this->createNotFoundException('Cette passion n\'existe pas');
+    }
+
+    return $this->render('home/passion_detail.html.twig', [
+        'passion' => $passions[$id],
+    ]);
+}
+
+
+
 }

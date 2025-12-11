@@ -5,424 +5,106 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}DA BOIT - Portfolio{% endblock %}</title>
     
-    {# Bootswatch - OBLIGATOIRE cahier des charges #}
+    {# Bootswatch #}
     <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/flatly/bootstrap.min.css" rel="stylesheet">
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         :root {
-            --bg-primary: #ffffff;
-            --text-primary: #000000;
-            --text-secondary: #666666;
-            --border-color: #e5e5e5;
-            --card-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            --accent-color: #5227FF; /* Couleur pour le menu */
+            --accent-color: #5227FF;
+            --text-primary: #000;
+            --text-secondary: #666;
+            --bg-color: #ffffff; /* Fond blanc standard */
         }
         
+        /* --- LAYOUT GÉNÉRAL --- */
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            background: var(--bg-primary);
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
             color: var(--text-primary);
-            line-height: 1.6;
-            font-size: 15px;
-            -webkit-font-smoothing: antialiased;
-            overflow-x: hidden; /* Important pour le menu glissant */
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
-        
+
+        main {
+            flex: 1; /* Pour que le footer reste en bas si peu de contenu */
+        }
+
         a { text-decoration: none !important; }
-        
-        /* --- HEADER MODIFIÉ POUR LE NOUVEAU MENU --- */
+
+        /* --- HEADER (Style Verre Moderne) --- */
         .header {
             padding: 1rem 0;
-            border-bottom: 1px solid var(--border-color);
-            position: relative;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            background: rgba(255, 255, 255, 0.85); /* Semi-transparent */
+            backdrop-filter: blur(10px); /* Effet de flou sur le contenu qui passe dessous */
+            position: sticky;
+            top: 0;
             z-index: 100;
-            background: #fff; /* Assure que le header cache le contenu si besoin */
         }
         
-        .container-custom {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-        
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center; /* Alignement centré avec le bouton */
-        }
-        
-        .logo-section h1 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-            letter-spacing: -0.02em;
-        }
-        
-        .logo-section p {
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-        }
-        
-        /* --- NOUVEAU BOUTON MENU ANIMÉ --- */
-        .menu-toggle {
-            background: none;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 600;
-            color: #000;
-            z-index: 101;
-        }
+        .container-custom { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        .logo-section h1 { font-size: 1.1rem; font-weight: 600; margin: 0; }
+        .logo-section p { color: var(--text-secondary); font-size: 0.95rem; margin: 0; }
 
-        .menu-text-wrap {
-            height: 1.2em;
-            overflow: hidden;
-            text-align: right;
-            font-size: 0.9rem;
-        }
-
-        .menu-text-inner {
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.4s cubic-bezier(0.7, 0, 0.3, 1);
-        }
-
-        .menu-icon {
-            width: 24px;
-            height: 24px;
-            position: relative;
-            transition: transform 0.4s ease;
-        }
-
-        .line {
-            position: absolute;
-            top: 50%;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: currentColor;
-            transition: transform 0.4s ease;
-        }
-
+        /* --- MENU --- */
+        .menu-toggle { background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 600; z-index: 101; color: #000; }
+        .menu-text-wrap { height: 1.2em; overflow: hidden; text-align: right; font-size: 0.9rem; }
+        .menu-text-inner { display: flex; flex-direction: column; transition: transform 0.4s; }
+        .menu-icon { width: 24px; height: 24px; position: relative; }
+        .line { position: absolute; top: 50%; left: 0; width: 100%; height: 2px; background: currentColor; transition: 0.4s; }
         .v-line { transform: rotate(90deg); }
 
-        /* --- NOUVEAU PANNEAU MENU (STAGGERED) --- */
-        .menu-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            z-index: 90;
-            pointer-events: none; /* Laisse passer les clics quand fermé */
-            background: transparent;
-            transition: background 0.3s;
-        }
-
-        .menu-panel {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100%;
-            max-width: 400px; /* Largeur du menu */
-            height: 100%;
-            background: #fff;
-            padding: 8rem 3rem 4rem 3rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transform: translateX(100%);
-            transition: transform 0.6s cubic-bezier(0.7, 0, 0.3, 1);
-            box-shadow: -10px 0 40px rgba(0,0,0,0.1);
-            overflow-y: auto;
-            pointer-events: auto;
-        }
-
-        /* Liens du menu avec effet cascade */
-        .menu-link {
-            display: block;
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #000;
-            margin-bottom: 1.5rem;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.5s ease, transform 0.5s ease, color 0.3s;
-        }
-
-        .menu-link span {
-            font-size: 0.9rem;
-            color: var(--accent-color);
-            margin-right: 15px;
-            font-weight: 500;
-            vertical-align: middle;
-        }
-
+        .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 90; pointer-events: none; transition: background 0.3s; }
+        .menu-panel { position: absolute; top: 0; right: 0; width: 100%; max-width: 400px; height: 100%; background: #fff; padding: 8rem 3rem; display: flex; flex-direction: column; justify-content: space-between; transform: translateX(100%); transition: transform 0.6s cubic-bezier(0.7, 0, 0.3, 1); box-shadow: -10px 0 40px rgba(0,0,0,0.1); pointer-events: auto; }
+        
+        .menu-link { display: block; font-size: 1.8rem; font-weight: 700; color: #000; margin-bottom: 1.5rem; opacity: 0; transform: translateY(30px); transition: 0.5s; }
+        .menu-link span { font-size: 0.9rem; color: var(--accent-color); margin-right: 15px; }
         .menu-link:hover { color: var(--accent-color); }
+        .menu-socials { display: flex; gap: 20px; opacity: 0; transform: translateY(20px); transition: 0.5s; padding-top: 2rem; border-top: 1px solid #eee; }
+        .menu-socials a { color: var(--text-secondary); font-weight: 500; }
 
-        /* Socials dans le menu */
-        .menu-socials {
-            display: flex;
-            gap: 20px;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: 0.5s ease;
-            padding-top: 2rem;
-            border-top: 1px solid #eee;
-        }
-
-        .menu-socials a {
-            color: var(--text-secondary);
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-
-        .menu-socials a:hover { color: var(--accent-color); }
-
-        /* --- ÉTATS D'OUVERTURE (JS) --- */
+        /* Ouverture Menu */
         body.menu-is-open { overflow: hidden; }
-        
-        body.menu-is-open .menu-text-inner { transform: translateY(-50%); } /* Affiche "Fermer" */
-        body.menu-is-open .line.v-line { transform: rotate(0deg); } /* + devient - */
+        body.menu-is-open .menu-text-inner { transform: translateY(-50%); }
+        body.menu-is-open .line.v-line { transform: rotate(0deg); }
         body.menu-is-open .menu-icon { transform: rotate(180deg); }
-        
-        body.menu-is-open .menu-overlay {
-            pointer-events: auto;
-            background: rgba(0,0,0,0.4); /* Fond sombre */
-        }
-        
+        body.menu-is-open .menu-overlay { pointer-events: auto; background: rgba(0,0,0,0.2); }
         body.menu-is-open .menu-panel { transform: translateX(0); }
-
-        /* Délais en cascade (Stagger) */
         body.menu-is-open .menu-link { opacity: 1; transform: translateY(0); }
+        body.menu-is-open .menu-socials { opacity: 1; transform: translateY(0); }
+        
         body.menu-is-open .menu-link:nth-child(1) { transition-delay: 0.1s; }
         body.menu-is-open .menu-link:nth-child(2) { transition-delay: 0.15s; }
         body.menu-is-open .menu-link:nth-child(3) { transition-delay: 0.2s; }
         body.menu-is-open .menu-link:nth-child(4) { transition-delay: 0.25s; }
         body.menu-is-open .menu-link:nth-child(5) { transition-delay: 0.3s; }
-        body.menu-is-open .menu-socials { opacity: 1; transform: translateY(0); transition-delay: 0.4s; }
+        body.menu-is-open .menu-socials { transition-delay: 0.4s; }
 
-        /* --- RESTE DU SITE (INCHANGÉ) --- */
-        
-        /* University Section */
-        .university-section {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 3rem 0;
-            gap: 2rem;
-        }
-        
-        /* Style fenêtre macOS */
-        .university-card {
-            background: #fff;
-            padding: 0;
-            border-radius: 12px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-            overflow: hidden;
-            min-width: 320px;
-            position: relative;
-        }
+        /* Footer */
+        .footer { padding: 3rem 0; margin-top: 5rem; background: #f8f9fa; border-top: 1px solid rgba(0,0,0,0.05); }
+        .footer-content { display: flex; justify-content: space-between; }
+        .social-links { display: flex; gap: 1rem; margin-top: 1rem; }
+        .social-links a { width: 36px; height: 36px; border-radius: 50%; background: #fff; border: 1px solid #eee; display: flex; align-items: center; justify-content: center; color: #000; transition: 0.2s; }
+        .social-links a:hover { background: #e5e5e5; }
 
-        /* Barre de titre macOS */
-        .mac-titlebar {
-            height: 40px;
-            background: linear-gradient(180deg, #e8e8e8 0%, #d0d0d0 100%);
-            border-bottom: 1px solid #b0b0b0;
-            display: flex;
-            align-items: center;
-            padding: 0 15px;
-        }
-
-        /* Boutons macOS (rouge, jaune, vert) */
-        .mac-buttons {
-            display: flex;
-            gap: 8px;
-        }
-
-        .mac-button {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            border: 1px solid rgba(0,0,0,0.1);
-        }
-
-        .mac-button.red {
-            background: linear-gradient(135deg, #ff6057 0%, #e14640 100%);
-        }
-
-        .mac-button.yellow {
-            background: linear-gradient(135deg, #ffbd2e 0%, #e6a425 100%);
-        }
-
-        .mac-button.green {
-            background: linear-gradient(135deg, #28c940 0%, #24b33b 100%);
-        }
-
-        /* Contenu de la fenêtre */
-        .university-card-content {
-            padding: 2.5rem 3rem;
-            text-align: center;
-            background: #fff;
-        }
-        
-        .university-logo {
-            width: 240px;
-            height: 160px;
-            margin: 0 auto;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .university-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-        
-        .university-card h2 {
-            font-size: 1.3rem;
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-        
-        .university-card p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-        
-        /* Tech Stack - Défilement infini */
-        .tech-stack-wrapper {
-            overflow: hidden;
-            width: 100%;
-            padding: 40px 0;
-        }
-
-        .tech-stack {
-            display: flex;
-            gap: 50px;
-            width: max-content;
-        }
-
-        .tech-item {
-            flex-shrink: 0;
-        }
-    
-        /* Section Titles */
-        .section-title {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 2.5rem;
-            letter-spacing: -0.02em;
-        }
-        
-        /* Footer avec copyright - OBLIGATOIRE cahier des charges */
-        .footer {
-            border-top: 1px solid var(--border-color);
-            padding: 3rem 0;
-            margin-top: 5rem;
-            background: #f8f9fa;
-        }
-        
-        .footer-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: start;
-        }
-        
-        .footer h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-
-        .footer-info {
-            max-width: 400px;
-        }
-
-        .footer-info p {
-            margin: 0.25rem 0;
-            font-size: 0.9rem;
-            color: var(--text-secondary);
-        }
-
-        .copyright-notice {
-            text-align: right;
-        }
-
-        .copyright-notice p {
-            margin: 0.25rem 0;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-        
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        
-        .social-links a {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: #f5f5f5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-primary);
-            text-decoration: none;
-            transition: background 0.2s;
-        }
-        
-        .social-links a:hover {
-            background: #e5e5e5;
-        }
-        
         @media (max-width: 768px) {
-            .container-custom {
-                padding: 0 1.5rem;
-            }
-            
-            .university-section {
-                flex-direction: column;
-            }
-            
-            .footer-content {
-                flex-direction: column;
-                gap: 1.5rem;
-                text-align: center;
-            }
-
-            .copyright-notice {
-                text-align: center;
-            }
-            
-            /* Ajustement Menu Mobile */
-            .menu-panel {
-                max-width: 100%;
-            }
+            .footer-content { flex-direction: column; gap: 2rem; text-align: center; }
+            .menu-panel { max-width: 100%; }
         }
     </style>
     
     {% block stylesheets %}{% endblock %}
 </head>
 <body>
-    {# Header #}
+
     <header class="header">
         <div class="container-custom">
             <div class="header-content">
@@ -430,26 +112,18 @@
                     <h1>DA BOIT Maxence</h1>
                     <p>Groupe TP: {{ groupe_tp|default('TP2') }}</p>
                 </div>
-                
-                {# NOUVEAU BOUTON #}
                 <button class="menu-toggle" id="menuToggle">
                     <div class="menu-text-wrap">
-                        <span class="menu-text-inner">
-                            <span>Menu</span>
-                            <span>Fermer</span>
-                        </span>
+                        <span class="menu-text-inner"><span>Menu</span><span>Fermer</span></span>
                     </div>
                     <div class="menu-icon">
-                        <span class="line"></span>
-                        <span class="line v-line"></span>
+                        <span class="line"></span><span class="line v-line"></span>
                     </div>
                 </button>
-
             </div>
         </div>
     </header>
 
-    {# NOUVEAU MENU OVERLAY #}
     <div class="menu-overlay" id="menuOverlay">
         <div class="menu-panel">
             <nav class="menu-nav">
@@ -459,7 +133,6 @@
                 <a href="{{ path('app_passions') }}" class="menu-link"><span>04.</span> Mes Passions</a>
                 <a href="{{ path('app_contact') }}" class="menu-link"><span>05.</span> Contact</a>
             </nav>
-
             <div class="menu-socials">
                 <a href="#" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
                 <a href="#" target="_blank"><i class="fab fa-github"></i> GitHub</a>
@@ -468,33 +141,25 @@
         </div>
     </div>
 
-    {# Main Content (Reste inchangé) #}
     <main>
         {% block body %}{% endblock %}
     </main>
 
-    {# Footer (Reste inchangé) #}
     <footer class="footer">
         <div class="container-custom">
             <div class="footer-content">
                 <div class="footer-info">
                     <h3>DA BOIT Maxence</h3>
                     <p>Étudiant BUT R&T - IUT de Roanne</p>
-                    <p>Groupe TP: {{ groupe_tp|default('TP2') }}</p>
-                    <p>Université Jean Monnet</p>
                     <div class="social-links">
-                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                        <a href="mailto:maxence.daboit@example.com" title="Email"><i class="fas fa-envelope"></i></a>
-                        <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="mailto:contact@example.com"><i class="fas fa-envelope"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
                     </div>
                 </div>
                 <div class="copyright-notice">
                     <p><strong>© {{ "now"|date("Y") }} DA BOIT Maxence</strong></p>
                     <p>Tous droits réservés</p>
-                    <p>Ce site et son contenu sont protégés</p>
-                    <p>par le droit d'auteur français.</p>
-                    <p>Toute reproduction, même partielle,</p>
-                    <p>est strictement interdite sans autorisation.</p>
                 </div>
             </div>
         </div>
@@ -502,37 +167,16 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     
-    {# NOUVEAU SCRIPT MENU #}
     <script>
     document.addEventListener('DOMContentLoaded', () => {
+        // --- GESTION DU MENU UNIQUEMENT ---
         const toggleBtn = document.getElementById('menuToggle');
         const overlay = document.getElementById('menuOverlay');
-        
-        // Fonction pour basculer le menu
-        function toggleMenu() {
-            document.body.classList.toggle('menu-is-open');
-        }
+        const toggleMenu = () => document.body.classList.toggle('menu-is-open');
 
-        // Clic sur le bouton
-        if (toggleBtn) {
-            toggleBtn.addEventListener('click', toggleMenu);
-        }
-
-        // Clic en dehors du panneau blanc pour fermer
-        if (overlay) {
-            overlay.addEventListener('click', (e) => {
-                if (e.target === overlay) {
-                    toggleMenu();
-                }
-            });
-        }
-
-        // Fermer le menu si on clique sur un lien
-        document.querySelectorAll('.menu-link').forEach(link => {
-            link.addEventListener('click', () => {
-                document.body.classList.remove('menu-is-open');
-            });
-        });
+        if(toggleBtn) toggleBtn.addEventListener('click', toggleMenu);
+        if(overlay) overlay.addEventListener('click', (e) => { if(e.target === overlay) toggleMenu(); });
+        document.querySelectorAll('.menu-link').forEach(l => l.addEventListener('click', () => document.body.classList.remove('menu-is-open')));
     });
     </script>
 

@@ -19,4 +19,25 @@
     array (
     ),
   ),
+  'three' => 
+  array (
+    'version' => '0.182.0',
+    'dependencies' => 
+    array (
+    ),
+    'extraFiles' => 
+    array (
+    ),
+  ),
+  'postprocessing' => 
+  array (
+    'version' => '6.38.0',
+    'dependencies' => 
+    array (
+      0 => 'three',
+    ),
+    'extraFiles' => 
+    array (
+    ),
+  ),
 );

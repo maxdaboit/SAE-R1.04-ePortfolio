@@ -25,4 +25,10 @@ return [
     '@hotwired/turbo' => [
         'version' => '7.3.0',
     ],
+    'three' => [
+        'version' => '0.182.0',
+    ],
+    'postprocessing' => [
+        'version' => '6.38.0',
+    ],
 ];

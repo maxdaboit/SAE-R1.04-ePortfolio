@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes Passions - DA BOIT Maxence{% endblock %}
+
+{% block stylesheets %}
+<style>
+    /* Grille auto-adaptative pour 2 éléments */
+    .passion-grid { 
+        display: grid; 
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
+        gap: 2rem; 
+        padding-bottom: 4rem; 
+    }
+
+    .topic-card { 
+        background: #fff; 
+        border-radius: 28px; 
+        overflow: hidden; 
+        border: 1px solid rgba(0,0,0,0.05); 
+        transition: 0.3s; 
+        height: 450px; 
+        display: flex; 
+        flex-direction: column; 
+        text-decoration: none; /* Important pour les liens */
+        color: var(--text-primary);
+    }
+
+    .topic-card:hover { 
+        transform: translateY(-10px); 
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1); 
+    }
+
+    .topic-visual { 
+        height: 60%; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        position: relative; 
+    }
+    
+    /* Animation curseur Linux */
+    .blink { animation: blinker 1s linear infinite; }
+    @keyframes blinker { 50% { opacity: 0; } }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container-custom py-5">
+    <h1 class="text-center fw-bold mb-5">Mes Passions</h1>
+    <div class="passion-grid">
+        
+        {# Carte 1 : Japonais #}
+        <a href="{{ path('app_japanese') }}" class="topic-card">
+            <div class="topic-visual" style="background: linear-gradient(135deg, #FF9A9E, #FECFEF);">
+                <h1 style="font-size: 5rem; color: rgba(255,255,255,0.5);">夢</h1>
+            </div>
+            <div class="p-4">
+                <h3>Japonais</h3>
+                <p class="text-secondary small">Apprentissage de la langue et immersion culturelle.</p>
+            </div>
+        </a>
+
+        {# Carte 2 : Linux #}
+        <a href="{{ path('app_linux') }}" class="topic-card">
+            <div class="topic-visual" style="background: #1e1e1e; color: #0f0; font-family: monospace;">
+                <div class="p-3">user@linux:~$ <span class="blink">_</span></div>
+            </div>
+            <div class="p-4">
+                <h3>Linux Ricing</h3>
+                <p class="text-secondary small">Personnalisation avancée et optimisation du workflow.</p>
+            </div>
+        </a>
+
+    </div>
+</div>
+{% endblock %}

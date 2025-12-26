@@ -4,13 +4,36 @@
 
 {% block stylesheets %}
 <style>
-    /* --- Styles Globaux hérités --- */
-    :root { --radius: 28px; --card-bg: #f8f9fa; }
+    /* --- 1. STYLES DE LA BENTO GRID (Nécessaire ici) --- */
+    .bento-grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 1.5rem;
+        padding-bottom: 4rem;
+    }
 
-    /* --- Styles Spécifiques Anki --- */
+    .bento-card {
+        background: #fff;
+        border-radius: 28px;
+        padding: 2.5rem;
+        border: 1px solid rgba(0,0,0,0.05);
+        overflow: hidden;
+        position: relative;
+    }
+
+    .col-span-12 { grid-column: span 12; }
+    .col-span-8 { grid-column: span 8; }
+    .col-span-6 { grid-column: span 6; }
+    .col-span-4 { grid-column: span 4; }
+
+    @media (max-width: 968px) {
+        .col-span-8, .col-span-6, .col-span-4 { grid-column: span 12; }
+    }
+
+    /* --- 2. STYLES ANKI (Ton code) --- */
     .anki-container {
         perspective: 1000px;
-        width: 100%; height: 300px;
+        width: 100%; height: 220px; /* Ajusté un peu pour la carte */
         display: flex; justify-content: center; align-items: center;
     }
     .anki-card {
@@ -20,6 +43,7 @@
         cursor: pointer;
     }
     .anki-card:hover { transform: rotateY(180deg); }
+    
     .anki-face {
         position: absolute; width: 100%; height: 100%;
         backface-visibility: hidden; border-radius: 15px;
@@ -29,37 +53,43 @@
     .anki-front { background: white; color: #333; border-bottom: 4px solid #FF9A9E; }
     .anki-back { background: #333; color: white; transform: rotateY(180deg); }
     
-    .kanji-display { font-size: 4rem; font-weight: 800; }
-    .furigana { font-size: 0.9rem; opacity: 0.6; }
+    .kanji-display { font-size: 4rem; font-weight: 800; line-height: 1; }
+    .furigana { font-size: 0.9rem; opacity: 0.6; margin-bottom: 0.5rem; }
     
+    /* Titre Hero */
+    .big-title { font-size: 3rem; font-weight: 800; line-height: 1.1; }
+
     /* Code block style */
     .code-block {
         background: #1e1e1e; color: #d4d4d4;
         padding: 1.5rem; border-radius: 15px;
-        font-family: 'Fira Code', monospace; font-size: 0.9rem;
+        font-family: 'Consolas', 'Monaco', monospace; font-size: 0.85rem;
         overflow-x: auto;
+        border: 1px solid #333;
     }
 </style>
 {% endblock %}
 
 {% block body %}
-<div class="container-custom" style="max-width: 1200px; margin: 0 auto; padding: 2rem;">
+<div class="container-custom py-5">
     
-    <a href="{{ path('app_passions') }}" style="text-decoration: none; color: #666; font-weight: 500; margin-bottom: 2rem; display: block;">
+    <a href="{{ path('app_passions') }}" class="btn btn-sm btn-outline-dark rounded-pill mb-4">
         ← Retour aux passions
     </a>
 
     <div class="bento-grid">
 
+        {# BLOC TITRE #}
         <div class="bento-card col-span-8 d-flex flex-column justify-content-center" style="background: linear-gradient(135deg, #fff0f0 0%, #ffffff 100%);">
             <span class="badge bg-danger mb-3" style="width: fit-content;">Projet Personnel</span>
-            <h1 class="big-title" style="margin-bottom: 0.5rem;">Nihongo <br><span style="color: #e74c3c;">Engineering</span></h1>
-            <p class="text-secondary" style="font-size: 1.1rem;">
-                Comment je hacke ma mémoire en utilisant HTML, CSS et le système de répétition espacée (SRS).
+            <h1 class="big-title mb-3">Nihongo <br><span style="color: #e74c3c;">Engineering</span></h1>
+            <p class="text-secondary" style="font-size: 1.1rem; max-width: 600px;">
+                Comment je hacke ma mémoire en utilisant HTML, CSS et le système de répétition espacée (SRS) pour optimiser mon apprentissage du japonais.
             </p>
         </div>
 
-        <div class="bento-card col-span-4 d-flex align-items-center justify-content-center" style="background: #eaeaea;">
+        {# BLOC CARTE INTERACTIVE #}
+        <div class="bento-card col-span-4 d-flex align-items-center justify-content-center flex-column" style="background: #f8f9fa;">
             <div class="anki-container">
                 <div class="anki-card">
                     <div class="anki-face anki-front">
@@ -68,38 +98,41 @@
                     </div>
                     <div class="anki-face anki-back">
                         <h3 style="margin:0;">Chat</h3>
-                        <small style="opacity:0.7;">Noun</small>
+                        <small style="opacity:0.7;">Noun / Cat</small>
                     </div>
                 </div>
             </div>
-            <div style="position: absolute; bottom: 1rem; text-align: center; width: 100%; opacity: 0.5; font-size: 0.8rem;">
-                Survolez la carte
+            <div class="mt-3 text-muted small">
+                <i class="fas fa-mouse-pointer me-1"></i> Survolez la carte
             </div>
         </div>
 
+        {# BLOC EXPLICATION #}
         <div class="bento-card col-span-6">
             <h3>La Problématique</h3>
             <p class="text-secondary mt-3">
                 Les cartes Anki par défaut sont visuellement pauvres. Pour apprendre efficacement une langue complexe comme le japonais, le <strong>contexte visuel</strong> est clé.
             </p>
             <p class="text-secondary">
-                J'ai développé des templates CSS qui adaptent automatiquement la couleur de la carte selon la nature grammaticale du mot (Verbe = Rouge, Adjectif = Bleu) grâce à des attributs HTML injectés dynamiquement.
+                J'ai développé des templates CSS qui adaptent automatiquement la couleur de la carte selon la nature grammaticale du mot (Verbe = Rouge, Adjectif = Bleu) grâce à des attributs HTML injectés dynamiquement par JavaScript.
             </p>
         </div>
 
+        {# BLOC CODE #}
         <div class="bento-card col-span-6" style="background: #111; border: 1px solid #333;">
             <h4 style="color: white; margin-bottom: 1rem;">CSS Template (Extrait)</h4>
             <div class="code-block">
-.card.noun { 
+<pre style="margin:0;"><code>.card.noun { 
 border-top: 5px solid #3498db; 
 }
+
 .card.verb { 
 border-top: 5px solid #e74c3c; 
 }
 
 /* Furigana hover effect */
 ruby rt { opacity: 0; transition: 0.3s; }
-.card:hover ruby rt { opacity: 1; }
+.card:hover ruby rt { opacity: 1; }</code></pre>
             </div>
         </div>
 

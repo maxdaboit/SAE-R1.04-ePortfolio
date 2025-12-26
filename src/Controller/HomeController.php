@@ -2,90 +2,95 @@
 
 namespace App\Controller;
 
+use App\Form\ContactType; // <-- à créer juste après (voir section 2)
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
-    // --- DONNÉES DES PROJETS (Gardées intactes) ---
+    /**
+     * Simule une base de données pour les projets
+     */
     private function getProjects(): array
     {
         return [
             [
                 'id' => 1,
-                'title' => 'RT1 - Administrer les réseaux',
-                'description' => 'Configuration et administration de réseaux d\'entreprise (VLAN, Routage, etc.).',
-                'full_description' => 'Ce projet consistait à concevoir et déployer une architecture réseau complète pour une PME fictive. Il a fallu configurer les équipements actifs (switchs, routeurs) pour assurer la segmentation via des VLANs et la sécurité des accès.',
-                'date' => 'Septembre 2023',
-                'duration' => '4 mois',
+                'title' => 'Administration Réseaux (Cisco)',
+                'category' => 'SAE 2.01',
+                'description' => 'Conception d\'une architecture réseau pour une PME (VLAN, Routage OSPF).',
+                'full_description' => 'Dans le cadre de la SAE 2.01, j\'ai dû concevoir l\'architecture complète d\'un réseau d\'entreprise. L\'objectif était de segmenter les services via des VLANs et d\'assurer la redondance.',
+                'date' => 'Semestre 2',
+                'duration' => 'SAE',
                 'gradient' => 'gradient-1',
                 'imageFilename' => 'cisco.png',
-                'technologies' => ['Cisco IOS', 'VLAN', 'OSPF', 'Wireshark'],
+                'technologies' => ['Cisco Packet Tracer', 'VLAN', 'OSPF', 'Wireshark'],
                 'challenges' => [
-                    'Mise en place du routage inter-VLAN sans perte de paquets.',
-                    'Sécurisation des accès SSH sur les équipements.',
-                    'Débogage des tables ARP lors des tests de connectivité.'
+                    'Routage inter-VLAN complexe.',
+                    'Respect du cahier des charges strict.',
+                    'Configuration des ACLs.'
                 ],
                 'results' => [
-                    'Architecture réseau stable et redondante.',
-                    'Documentation technique complète remise au client.',
-                    'Note de 18/20 obtenue lors de la soutenance.'
+                    'Maquette fonctionnelle à 100%.',
+                    'Dossier technique validé par l\'enseignant.',
+                    'Note obtenue : 16/20.'
                 ]
             ],
             [
                 'id' => 2,
-                'title' => 'RT2 - Connecter les entreprises',
-                'description' => 'Mise en place de solutions de connectivité et de télécommunication.',
-                'full_description' => 'L\'objectif était d\'interconnecter deux sites distants via un tunnel VPN sécurisé et de mettre en place des services réseaux essentiels (DNS, DHCP, Web) sous environnement Linux.',
-                'date' => 'Janvier 2024',
-                'duration' => '3 mois',
+                'title' => 'Services Réseaux Linux',
+                'category' => 'TP Avancé',
+                'description' => 'Mise en place de services DNS, DHCP et Web sous Ubuntu Server.',
+                'full_description' => 'Durant ce cycle de Travaux Pratiques, nous avons déployé des services critiques sur des machines virtuelles Linux. L\'accent était mis sur la sécurité et l\'automatisation.',
+                'date' => 'Semestre 3',
+                'duration' => '4 Séances',
                 'gradient' => 'gradient-2',
                 'imageFilename' => 'ubuntu.png',
-                'technologies' => ['Linux (Ubuntu)', 'Apache', 'OpenVPN', 'Bind9'],
+                'technologies' => ['Linux', 'Bind9 (DNS)', 'Apache', 'Bash'],
                 'challenges' => [
-                    'Configuration correcte des zones DNS directes et inverses.',
-                    'Gestion des certificats SSL pour le serveur Web.',
-                    'Configuration du pare-feu UFW pour n\'autoriser que le trafic légitime.'
+                    'Configuration manuelle des fichiers de zone DNS.',
+                    'Interconnexion des VMs.',
+                    'Scripting Bash pour l\'automatisation.'
                 ],
                 'results' => [
-                    'Interconnexion des sites fonctionnelle à 100%.',
-                    'Service Web accessible via nom de domaine interne.',
-                    'Mise en place d\'un script de sauvegarde automatique.'
+                    'Serveurs opérationnels.',
+                    'Compréhension approfondie du protocole DNS.',
+                    'Validation des acquis techniques.'
                 ]
             ],
             [
                 'id' => 3,
-                'title' => 'RT3 - Développement d\'outils',
-                'description' => 'Développement d\'applications web pour la gestion réseau.',
-                'full_description' => 'Création d\'une interface web dynamique permettant aux administrateurs de visualiser l\'état du parc informatique. Utilisation du framework Symfony pour structurer le code selon le modèle MVC.',
-                'date' => 'Avril 2024',
-                'duration' => '2 mois',
+                'title' => 'Développement Portfolio',
+                'category' => 'SAE 1.04',
+                'description' => 'Création d\'un site web dynamique en PHP/Symfony pour présenter mes compétences.',
+                'full_description' => 'Cette SAE visait à nous initier au développement Web backend. J\'ai choisi d\'utiliser le framework Symfony pour structurer mon code et apprendre l\'architecture MVC.',
+                'date' => 'Semestre 2',
+                'duration' => 'SAE',
                 'gradient' => 'gradient-3',
                 'imageFilename' => 'symfony.png',
-                'technologies' => ['Symfony 7', 'PHP 8', 'Twig', 'Bootstrap', 'MySQL'],
+                'technologies' => ['Symfony', 'Twig', 'Bootstrap', 'Git'],
                 'challenges' => [
-                    'Compréhension de la structure MVC de Symfony.',
-                    'Création de relations complexes en base de données (ManyToOne).',
-                    'Intégration d\'un design responsive avec CSS Grid.'
+                    'Apprentissage du framework Symfony.',
+                    'Gestion des routes et des contrôleurs.',
+                    'Design responsive.'
                 ],
                 'results' => [
-                    'Site e-portfolio personnel mis en ligne.',
-                    'Code propre et réutilisable.',
-                    'Maîtrise des bases du développement Back-end.'
+                    'Site en ligne et fonctionnel.',
+                    'Compétence validée en développement Web.',
+                    'Base solide pour mon avenir pro.'
                 ]
             ],
         ];
     }
-
-    // --- ROUTES PRINCIPALES ---
 
     #[Route('/', name: 'app_home')]
     public function index(): Response
     {
         return $this->render('home/index.html.twig', [
             'projects' => $this->getProjects(),
-            'groupe_tp' => 'TP-A2',
         ]);
     }
 
@@ -104,11 +109,33 @@ class HomeController extends AbstractController
     }
 
     #[Route('/contact', name: 'app_contact')]
-    public function contact(): Response
-    {
-        return $this->render('home/contact.html.twig');
+public function contact(Request $request): Response
+{
+    $form = $this->createForm(ContactType::class);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        $pdfPath = $this->getParameter('kernel.project_dir').'/public/cv_daboit.pdf';
+
+        // 1) on crée la réponse de fichier
+        $response = $this->file(
+            $pdfPath,
+            'CV_DA_BOIT_Maxence.pdf',
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT
+        );
+
+        // 2) on ajuste éventuellement le header sur CETTE réponse
+        $response->headers->set('Content-Type', 'application/pdf');
+
+        // 3) on renvoie bien un objet Response
+        return $response;
     }
 
+    // 3) afficher le formulaire
+    return $this->render('home/contact.html.twig', [
+        'form' => $form->createView(),
+    ]);
+}
     #[Route('/project/{id}', name: 'app_project_detail')]
     public function projectDetail(int $id): Response
     {
@@ -123,7 +150,7 @@ class HomeController extends AbstractController
         }
 
         if (!$selectedProject) {
-            throw $this->createNotFoundException('Projet non trouvé !');
+            throw $this->createNotFoundException('Réalisation non trouvée !');
         }
 
         return $this->render('home/project_detail.html.twig', [
@@ -131,42 +158,23 @@ class HomeController extends AbstractController
         ]);
     }
 
-    // --- NOUVELLES ROUTES PASSIONS ---
+    // --- ROUTES PASSIONS ---
 
-    /**
-     * Le Hub des passions (La grille Bento)
-     */
     #[Route('/passions', name: 'app_passions')]
     public function passions(): Response
     {
-        // On pointe vers le nouveau template index des passions
-        return $this->render('passions/index.html.twig');
+        return $this->render('home/passions/index.html.twig');
     }
 
-    /**
-     * Page Détail : Japonais & Anki
-     */
     #[Route('/passion/japanese', name: 'app_japanese')]
     public function japanese(): Response
     {
-        return $this->render('home/japanese.html.twig');
+        return $this->render('home/passions/japanese.html.twig');
     }
 
-    /**
-     * Page Détail : Unix / Linux Ricing
-     */
     #[Route('/passion/linux', name: 'app_linux')]
     public function linux(): Response
     {
-        return $this->render('home/linux.html.twig');
-    }
-
-    /**
-     * Page Détail : Blender 3D
-     */
-    #[Route('/passion/blender', name: 'app_blender')]
-    public function blender(): Response
-    {
-        return $this->render('home/blender.html.twig');
+        return $this->render('home/passions/linux.html.twig');
     }
 }

@@ -1,77 +1,136 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Formulaire - DA BOIT Maxence{% endblock %}
+{% block title %}Contact - DA BOIT Maxence{% endblock %}
 
-{% block body %}
-<section class="py-5">
-    <div class="container">
-        <h1 class="display-5 fw-bold text-center mb-5">Télécharger mon CV</h1>
-        
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card shadow-lg">
-                    <div class="card-body p-5">
-                        <p class="lead text-center mb-4">
-                            Remplissez ce formulaire pour télécharger mon CV au format PDF ou DOCX
-                        </p>
-                        
-                        <form id="cvForm">
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">Nom *</label>
-                                <input type="text" class="form-control" name="nom" required>
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">Prénom *</label>
-                                <input type="text" class="form-control" name="prenom" required>
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">Email *</label>
-                                <input type="email" class="form-control" name="email" required>
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">Entreprise</label>
-                                <input type="text" class="form-control" name="entreprise">
-                            </div>
-                            
-                            <div class="mb-4">
-                                <label class="form-label fw-bold">Format souhaité *</label>
-                                <select class="form-select" name="format" required>
-                                    <option value="">Choisir un format</option>
-                                    <option value="pdf">PDF</option>
-                                    <option value="docx">DOCX</option>
-                                </select>
-                            </div>
-                            
-                            <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-primary btn-lg">
-                                    <i class="fas fa-download me-2"></i>Télécharger le CV
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+{% block stylesheets %}
+<style>
+    .contact-wrapper {
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .contact-card {
+        background: rgba(255, 255, 255, 0.12);
+        border-radius: 24px;
+        padding: 2.5rem;
+        box-shadow: 0 18px 45px rgba(15, 23, 42, 0.35);
+        backdrop-filter: blur(18px);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+    }
+
+    .contact-title {
+        font-weight: 700;
+        letter-spacing: 0.03em;
+    }
+
+    .contact-subtitle {
+        font-size: 0.95rem;
+        opacity: 0.8;
+    }
+
+    .contact-label {
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin-bottom: 0.35rem;
+    }
+
+    .contact-input,
+    .contact-textarea {
+        border-radius: 999px;
+        border: 1px solid rgba(148, 163, 184, 0.6);
+        /* fond clair au lieu de gris foncé */
+        background: rgba(255, 255, 255, 0.85);
+        color: #0f172a;
+        padding-inline: 1.25rem;
+        transition: all 0.18s ease;
+    }
+
+    .contact-textarea {
+        border-radius: 20px;
+        min-height: 130px;
+        resize: vertical;
+        padding-top: 0.85rem;
+    }
+
+    .contact-input::placeholder,
+    .contact-textarea::placeholder {
+        color: rgba(148, 163, 184, 0.9);
+    }
+
+    .contact-input:focus,
+    .contact-textarea:focus {
+        border-color: rgba(82, 39, 255, 0.9);
+        box-shadow: 0 0 0 1px rgba(82, 39, 255, 0.35);
+        outline: none;
+        background: #ffffff;
+    }
+
+    .contact-btn {
+        border-radius: 999px;
+        padding-inline: 2.5rem;
+        font-weight: 600;
+        box-shadow: 0 12px 30px rgba(82, 39, 255, 0.45);
+    }
+</style>
 {% endblock %}
 
-{% block javascripts %}
-<script>
-document.getElementById('cvForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const format = this.format.value;
-    const nom = this.nom.value;
-    const prenom = this.prenom.value;
-    
-    alert(`Merci ${prenom} ${nom} ! Le téléchargement de votre CV au format ${format.toUpperCase()} va commencer.`);
-    
-    // Ici vous pouvez ajouter la logique de téléchargement
-    window.print(); // Pour l'instant, ouvre la fenêtre d'impression
-});
-</script>
+
+{% block body %}
+<div class="container-custom py-5">
+    <div class="contact-wrapper">
+
+        <div class="mb-4 text-center">
+            <h1 class="contact-title mb-2">Me contacter</h1>
+            <p class="contact-subtitle">
+                Merci de remplir ce formulaire pour recevoir mon CV au format PDF.<br>
+                Je vous répondrai rapidement si vous souhaitez plus d’informations.
+            </p>
+        </div>
+
+        <div class="contact-card">
+            {{ form_start(form) }}
+
+                <div class="mb-3">
+                    <label class="contact-label">{{ form_label(form.name) }}</label>
+                    {{ form_widget(form.name, {
+                        attr: {
+                            class: 'form-control contact-input',
+                        }
+                    }) }}
+                    {{ form_errors(form.name) }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="contact-label">{{ form_label(form.email) }}</label>
+                    {{ form_widget(form.email, {
+                        attr: {
+                            class: 'form-control contact-input',
+                        }
+                    }) }}
+                    {{ form_errors(form.email) }}
+                </div>
+
+                <div class="mb-4">
+                    <label class="contact-label">{{ form_label(form.message) }}</label>
+                    {{ form_widget(form.message, {
+                        attr: {
+                            class: 'form-control contact-textarea',
+                        }
+                    }) }}
+                    {{ form_errors(form.message) }}
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    {{ form_widget(form.send, {
+                        attr: {
+                            class: 'btn btn-primary contact-btn'
+                        }
+                    }) }}
+                </div>
+
+            {{ form_end(form) }}
+        </div>
+
+    </div>
+</div>
 {% endblock %}

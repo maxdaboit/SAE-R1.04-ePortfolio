@@ -36,7 +36,7 @@
 
         /* HEADER GLASSMORPHISM */
         .header {
-            padding: 1rem 0;
+            padding: 0.5rem 0;
             border-bottom: 1px solid rgba(0,0,0,0.05);
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(10px);
@@ -44,7 +44,17 @@
             top: 0;
             z-index: 100;
         }
-        
+        .logo-section h1 {
+    font-size: 1.4rem;   /* au lieu d’un h1 par défaut très grand */
+    margin-bottom: 0.15rem;
+}
+
+.logo-section p {
+    font-size: 0.85rem;
+    margin-bottom: 0;
+    color: var(--text-secondary);
+}
+
         .container-custom { max-width: 1600px; margin: 0 auto; padding: 0 2rem; }
         .header-content { display: flex; justify-content: space-between; align-items: center; }
 
@@ -134,7 +144,8 @@
             </nav>
             <div class="menu-socials">
                 <a href="#" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
-                <a href="#" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+                <a href="https://github.com/maxdaboit" target="_blank" rel="noopener">
+                <i class="fab fa-github"></i> GitHub </a>
                 <a href="mailto:maxence.daboit@example.com"><i class="fas fa-envelope"></i> Email</a>
             </div>
         </div>

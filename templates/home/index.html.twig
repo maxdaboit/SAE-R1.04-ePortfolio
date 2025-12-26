@@ -128,7 +128,7 @@
                         
                         {# LIEN VERS LE DÉTAIL DU PROJET #}
                         <a href="{{ path('app_project_detail', {id: project.id}) }}" class="paper" 
-                           data-base-x="{{ cfg.x }}" data-base-y="{{ cfg.y }}" data-rotate="{{ cfg.r }}">
+                            data-base-x="{{ cfg.x }}" data-base-y="{{ cfg.y }}" data-rotate="{{ cfg.r }}">
                             <div class="paper-img" style="background-image: url('{{ asset('Image/' ~ project.imageFilename) }}');"></div>
                             <div class="paper-info"><span class="paper-title">{{ project.title }}</span></div>
                         </a>

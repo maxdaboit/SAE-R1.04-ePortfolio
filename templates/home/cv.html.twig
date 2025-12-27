@@ -49,9 +49,17 @@
 
 {% block body %}
 
+
 {# --- 1. EN-TÊTE MODERNE --- #}
 <div class="glass-header text-center">
     <div class="container-custom">
+
+        <div class="d-flex justify-content-start mb-3">
+            <a href="{{ path('app_home') }}" class="btn btn-sm btn-outline-light rounded-pill">
+                ← Retour
+            </a>
+        </div>
+
         <h1 class="display-4 fw-bold mb-2">DA BOIT Maxence</h1>
         <h2 class="h3 opacity-75 mb-4">Étudiant en BUT Réseaux & Télécommunications</h2>
         
@@ -62,13 +70,11 @@
             <span><i class="fas fa-car me-2"></i>Permis B</span>
         </div>
 
-        {# BOUTON DE TÉLÉCHARGEMENT PDF #}
         <a href="{{ path('app_contact') }}" class="btn btn-light btn-lg rounded-pill px-5 fw-bold text-primary shadow-sm">
-        <i class="fas fa-download me-2"></i>Télécharger le CV PDF
+            <i class="fas fa-download me-2"></i>Télécharger le CV PDF
         </a>
     </div>
 </div>
-
 <div class="container-custom pb-5">
     
     <div class="row g-5">
@@ -106,7 +112,7 @@
                         </div>
                         <p class="text-muted mb-0">Lycée Arago, Roanne</p>
                     </div>
-                    <div class="timeline-item border-0 pb-0">
+                    <div class="timeline-item pb-0">
                         <div class="d-flex justify-content-between mb-1">
                             <h5 class="fw-bold">BEP Systèmes Électroniques Numériques</h5>
                             <span class="text-muted fw-bold">2019</span>
@@ -131,7 +137,7 @@
                         <div class="d-flex gap-2 flex-wrap">
                             <span class="badge bg-light text-dark border">Précision</span>
                             <span class="badge bg-light text-dark border">Esprit d'équipe</span>
-                            <span class="badge bg-light text-dark border">Gestion du stress</span>
+                            <span class="badge bg-light text-dark border">Souci du détail</span>
                         </div>
                     </div>
 
@@ -140,11 +146,16 @@
                             <h5 class="fw-bold">Préparateur de commandes</h5>
                             <span class="text-muted small">2020 - 2021</span>
                         </div>
-                        <h6 class="text-primary small mb-2">Intermarché / Les Mousquetaires</h6>
+                        <h6 class="text-primary small mb-2">Intermarché / Les Mousquetaires, Reyrieux</h6>
                         <p class="text-secondary small mb-2">Gestion des stocks, respect des délais et collaboration avec les équipes commerciales.</p>
+                        <div class="d-flex gap-2 flex-wrap">
+                            <span class="badge bg-light text-dark border">Organisation</span>
+                            <span class="badge bg-light text-dark border">Rapidité</span>
+                            <span class="badge bg-light text-dark border">Responsabilité</span>
+                        </div>
                     </div>
 
-                    <div class="timeline-item border-0 pb-0">
+                    <div class="timeline-item pb-0">
                         <div class="d-flex justify-content-between mb-1">
                             <h5 class="fw-bold">Stagiaire Technicien SAV & Informatique</h5>
                             <span class="text-muted small">2016 - 2019</span>
@@ -153,6 +164,7 @@
                         <div class="d-flex gap-2 flex-wrap">
                             <span class="badge bg-light text-dark border">Troubleshooting</span>
                             <span class="badge bg-light text-dark border">Pédagogie</span>
+                            <span class="badge bg-light text-dark border">Autonomie</span>
                         </div>
                     </div>
 
@@ -165,11 +177,14 @@
             
             {# COMPÉTENCES TECHNIQUES #}
             <div class="glass-card p-4 border-0 mb-4">
-                <h4 class="fw-bold mb-3">Hard Skills</h4>
+                <h4 class="fw-bold mb-3">Compétences techniques</h4>
                 <div class="mb-3">
                     <div class="skill-tag">Réseau (TCP/IP, DNS, DHCP)</div>
                     <div class="skill-tag">Cisco / Switchs</div>
-                    <div class="skill-tag">Linux Admin</div>
+                    <div class="skill-tag">Linux</div>
+                    <div class="skill-tag">Machine virtuel</div>
+                    <div class="skill-tag">SSH</div>
+                    <div class="skill-tag">HTML / CSS</div>
                     <div class="skill-tag">PHP / Symfony</div>
                     <div class="skill-tag">Python / C</div>
                     <div class="skill-tag">Docker</div>
@@ -208,9 +223,9 @@
                 <div class="mb-3">
                     <div class="d-flex justify-content-between align-items-center mb-1">
                         <span>Japonais</span>
-                        <span class="badge bg-info text-dark">N3 (Intermédiaire)</span>
+                        <span class="badge bg-primary">N3 (Intermédiaire)</span>
                     </div>
-                    <div class="progress" style="height: 6px;"><div class="progress-bar bg-info" style="width: 60%"></div></div>
+                    <div class="progress" style="height: 6px;"><div class="progress-bar bg-primary" style="width: 60%"></div></div>
                 </div>
             </div>
 
@@ -221,6 +236,7 @@
                     <span class="badge rounded-pill bg-white text-dark border"><i class="fas fa-camera me-1"></i>Photographie</span>
                     <span class="badge rounded-pill bg-white text-dark border"><i class="fas fa-gamepad me-1"></i>Jeux Vidéo</span>
                     <span class="badge rounded-pill bg-white text-dark border"><i class="fas fa-microchip me-1"></i>Tech</span>
+                    <span class="badge rounded-pill bg-white text-dark border"><i class="fas fa-language me-1"></i>Langues</span>
                     <span class="badge rounded-pill bg-white text-dark border"><i class="fas fa-running me-1"></i>Sport</span>
                 </div>
             </div>

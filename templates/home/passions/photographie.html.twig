@@ -1,0 +1,167 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Photographie - DA BOIT Maxence{% endblock %}
+
+{% block stylesheets %}
+<style>
+    .bento-grid {
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        gap: 1.5rem;
+        padding-bottom: 4rem;
+    }
+
+    .bento-card {
+        background: #fff;
+        border-radius: 28px;
+        padding: 2.5rem;
+        border: 1px solid rgba(0,0,0,0.05);
+        overflow: hidden;
+        position: relative;
+    }
+
+    .col-span-12 { grid-column: span 12; }
+    .col-span-8 { grid-column: span 8; }
+    .col-span-6 { grid-column: span 6; }
+    .col-span-4 { grid-column: span 4; }
+
+    @media (max-width: 968px) {
+        .col-span-8, .col-span-6, .col-span-4 { grid-column: span 12; }
+    }
+
+    .photo-hero {
+        background: linear-gradient(135deg, #1f2933 0%, #111827 100%);
+        color: #f9fafb;
+    }
+
+    .photo-hero-badge {
+        background: rgba(255,255,255,0.08);
+        border-radius: 999px;
+        padding: 0.3rem 0.9rem;
+        font-size: 0.8rem;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+    }
+
+    .photo-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.5rem;
+    }
+
+    .photo-thumb {
+        border-radius: 16px;
+        overflow: hidden;
+        height: 90px;
+        background: #000;
+    }
+
+    .photo-thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        opacity: .9;
+        transition: transform .3s ease, opacity .3s ease;
+    }
+
+    .photo-thumb img:hover {
+        transform: scale(1.05);
+        opacity: 1;
+    }
+
+    .code-block {
+        background: #1e1e1e;
+        color: #d4d4d4;
+        padding: 1.5rem;
+        border-radius: 15px;
+        font-family: 'Consolas','Monaco',monospace;
+        font-size: 0.85rem;
+        overflow-x: auto;
+        border: 1px solid #333;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container-custom py-5">
+    <a href="{{ path('app_passions') }}" class="btn btn-sm btn-outline-dark rounded-pill mb-4">
+        ← Retour
+    </a>
+
+    <div class="bento-grid">
+
+        {# Bloc titre #}
+        <div class="bento-card col-span-8 photo-hero d-flex flex-column justify-content-center">
+            <span class="photo-hero-badge mb-3">
+                <i class="fas fa-camera me-1"></i> Passion créative
+            </span>
+            <h1 class="mb-3" style="font-size: 2.7rem; font-weight: 800;">
+                Photographie<br>
+                <span style="opacity:.8; font-size: 1.8rem;">entre technique et composition</span>
+            </h1>
+            <p class="mb-0" style="max-width: 600px; opacity:.9;">
+                La photographie me permet de combiner sens du détail, observation du monde
+                et maîtrise technique (réglages, lumière, post‑traitement) pour raconter des histoires en images.
+            </p>
+        </div>
+
+        {# Mini mur de photos #}
+        <div class="bento-card col-span-4 d-flex flex-column justify-content-between">
+            <h3 class="h5 mb-3">Quelques ambiances</h3>
+            <div class="photo-grid">
+                <div class="photo-thumb">
+                    <img src="{{ asset('Image/photo1.jpg') }}" alt="Photo 1">
+                </div>
+                <div class="photo-thumb">
+                    <img src="{{ asset('Image/photo2.jpg') }}" alt="Photo 2">
+                </div>
+                <div class="photo-thumb">
+                    <img src="{{ asset('Image/photo3.jpg') }}" alt="Photo 3">
+                </div>
+                <div class="photo-thumb">
+                    <img src="{{ asset('Image/photo4.jpg') }}" alt="Photo 4">
+                </div>
+                <div class="photo-thumb">
+                    <img src="{{ asset('Image/photo5.jpg') }}" alt="Photo 5">
+                </div>
+                <div class="photo-thumb">
+                    <img src="{{ asset('Image/photo6.jpg') }}" alt="Photo 6">
+                </div>
+            </div>
+            <small class="text-muted mt-3">
+                Images d’illustration : urbain, paysages, détails du quotidien.
+            </small>
+        </div>
+
+        {# Bloc explication #}
+        <div class="bento-card col-span-6">
+            <h3>Ce qui me plaît dans la photo</h3>
+            <p class="text-secondary mt-3">
+                La photographie m’oblige à réfléchir à la lumière, au cadrage, au moment exact.
+                C’est un bon complément à l’informatique : patience, rigueur, sens de l’esthétique.
+            </p>
+            <ul class="text-secondary" style="padding-left:1rem;">
+                <li class="mb-2">Comprendre l’exposition (ouverture, vitesse, ISO) et l’utiliser de façon créative.</li>
+                <li class="mb-2">Chercher des compositions équilibrées et raconter quelque chose en une image.</li>
+                <li>Utiliser le post‑traitement pour sublimer la photo sans la dénaturer.</li>
+            </ul>
+        </div>
+
+        {# Bloc “workflow” #}
+        <div class="bento-card col-span-6">
+            <h3>Mon workflow</h3>
+            <p class="text-secondary mt-3">
+                J’essaie d’avoir une approche structurée, comme pour un projet technique :
+            </p>
+            <div class="code-block mt-2">
+<pre style="margin:0;"><code>// Workflow photo simplifié
+1. Préparation  : repérage, choix du matériel, réglages de base.
+2. Prise de vue : multiplier les essais, varier les angles et la lumière.
+3. Tri         : sélection des images les plus fortes.
+4. Retouche    : exposition, couleurs, recadrage, export pour le web.</code></pre>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

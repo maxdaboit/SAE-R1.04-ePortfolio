@@ -46,6 +46,10 @@
 
 {% block body %}
 <div class="container-custom py-5">
+    <a href="{{ path('app_home') }}" class="btn btn-sm btn-outline-dark rounded-pill mb-4">
+        ← Retour
+    </a>
+<div class="container-custom py-5">
     <h1 class="text-center fw-bold mb-5">Mes Passions</h1>
     <div class="passion-grid">
         
@@ -60,7 +64,7 @@
             </div>
         </a>
 
-        {# Carte 2 : Linux #}
+            {# Carte 2 : Linux #}
         <a href="{{ path('app_linux') }}" class="topic-card">
             <div class="topic-visual" style="background: #1e1e1e; color: #0f0; font-family: monospace;">
                 <div class="p-3">user@linux:~$ <span class="blink">_</span></div>
@@ -68,6 +72,19 @@
             <div class="p-4">
                 <h3>Linux Ricing</h3>
                 <p class="text-secondary small">Personnalisation avancée et optimisation du workflow.</p>
+            </div>
+        </a>
+
+        {# Carte 3 : Photographie #}
+        <a href="{{ path('app_photographie') }}" class="topic-card">
+            <div class="topic-visual" style="background: linear-gradient(135deg, #4e54c8, #8f94fb);">
+                <i class="fas fa-camera-retro" style="font-size: 3.5rem; color: rgba(255,255,255,0.9);"></i>
+            </div>
+            <div class="p-4">
+                <h3>Photographie</h3>
+                <p class="text-secondary small">
+                    Prise de vue, retouche et composition d’images pour capturer des moments et des ambiances.
+                </p>
             </div>
         </a>
 

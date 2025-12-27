@@ -93,7 +93,7 @@ class HomeController extends AbstractController
     'date' => 'Semestre 1',
     'duration' => 'TP',
     'gradient' => 'gradient-2',
-    'imageFilename' => 'ubuntu-virtualbox.png',
+    'imageFilename' => 'AC11.06.png',
     'technologies' => ['VirtualBox', 'Ubuntu LTS', 'Linux'],
     'challenges' => [
         'Choisir des paramètres adaptés pour la machine virtuelle (RAM, disque).',
@@ -116,7 +116,7 @@ class HomeController extends AbstractController
     'date' => 'Semestre 1',
     'duration' => 'TP',
     'gradient' => 'gradient-4',
-    'imageFilename' => 'esp32-dht22.png',
+    'imageFilename' => 'AC11.02.png',
     'technologies' => ['ESP32', 'DHT22', 'OLED SSD1306', 'Arduino IDE', 'WiFi', 'HTML/CSS'],
     'challenges' => [
         'Lecture fiable du capteur DHT22 et gestion de son temps de réponse.',
@@ -139,7 +139,7 @@ class HomeController extends AbstractController
     'date' => 'Semestre 1',
     'duration' => 'SAE',
     'gradient' => 'gradient-5',
-    'imageFilename' => 'devis-sae103.png',
+    'imageFilename' => 'AC12.05.png',
     'technologies' => ['Câblage structuré', 'Baie de brassage', 'RJ45 Cat6', 'Devis réseau'],
     'challenges' => [
         'Estimer les longueurs de câbles et goulottes à partir du plan de la salle.',
@@ -161,7 +161,7 @@ class HomeController extends AbstractController
     'date' => 'Semestre 1',
     'duration' => 'TP',
     'gradient' => 'gradient-1',
-    'imageFilename' => 'ac1103-partage-fichiers.png',
+    'imageFilename' => 'AC11.03.png',
     'technologies' => ['Linux', 'SSH', 'NFS', 'Samba', 'Kerberos', 'Réseau local'],
     'challenges' => [
         'Configurer correctement les interfaces et cartes réseau virtuelles pour le réseau interne.',
@@ -205,7 +205,7 @@ class HomeController extends AbstractController
     'date' => 'Semestre 1',
     'duration' => 'SAE',
     'gradient' => 'gradient-3',
-    'imageFilename' => 'audit-wifi-eduroam.png',
+    'imageFilename' => 'AC12.01.png',
     'technologies' => ['Wi‑Fi', 'Mesure', 'AirChecker', 'SNR', 'dBm'],
     'challenges' => [
         'Paramétrer correctement l’appareil AirChecker à partir de la documentation.',
@@ -218,9 +218,71 @@ class HomeController extends AbstractController
         'Recommandations d’ajout de points Wi‑Fi dans certaines zones du bâtiment G.'
     ]
 ],
-
         ];
     }
+/**
+ * Simule une base de données pour les analyses réflexives
+ */
+private function getReflexiveAnalyses(): array
+{
+    return [
+        [
+            'project_id' => 1,
+            'text1' => "Dans ce projet, j’ai… (faits + ressenti + analyse).",
+            'text2' => "Je retiens que j’ai renforcé… (conclusions / avenir).",
+            'text3' => "Pour le prochain projet, je vais… (actions concrètes).",
+        ],
+        [
+            'project_id' => 2,
+            'text1' => "…",
+            'text2' => "…",
+            'text3' => "…",
+        ],
+        [
+            'project_id' => 3,
+            'text1' => "…",
+            'text2' => "…",
+            'text3' => "…",
+        ],
+        [
+            'project_id' => 4,
+            'text1' => "…",
+            'text2' => "…",
+            'text3' => "…",
+        ],
+        [
+            'project_id' => 5,
+            'text1' => "…",
+            'text2' => "…",
+            'text3' => "…",
+        ],
+        [
+            'project_id' => 6,
+            'text1' => "…",
+            'text2' => "…",
+            'text3' => "…",
+        ],
+        [
+            'project_id' => 7,
+            'text1' => "…",
+            'text2' => "…",
+            'text3' => "…",
+        ],
+        [
+            'project_id' => 8,
+            'text1' => "…",
+            'text2' => "…",
+            'text3' => "…",
+        ],
+        [
+            'project_id' => 9,
+            'text1' => "…",
+            'text2' => "…",
+            'text3' => "…",
+        ],
+        // ajouter une entrée par projet où tu veux une analyse
+    ];
+}
 
     #[Route('/', name: 'app_home')]
     public function index(): Response
@@ -273,26 +335,36 @@ public function contact(Request $request): Response
     ]);
 }
     #[Route('/project/{id}', name: 'app_project_detail')]
-    public function projectDetail(int $id): Response
-    {
-        $projects = $this->getProjects();
-        $selectedProject = null;
+public function projectDetail(int $id): Response
+{
+    $projects  = $this->getProjects();
+    $analyses  = $this->getReflexiveAnalyses(); // méthode à ajouter plus haut
+    $selectedProject  = null;
+    $selectedAnalysis = null;
 
-        foreach ($projects as $p) {
-            if ($p['id'] === $id) {
-                $selectedProject = $p;
-                break;
-            }
+    foreach ($projects as $p) {
+        if ($p['id'] === $id) {
+            $selectedProject = $p;
+            break;
         }
-
-        if (!$selectedProject) {
-            throw $this->createNotFoundException('Réalisation non trouvée !');
-        }
-
-        return $this->render('home/project_detail.html.twig', [
-            'project' => $selectedProject,
-        ]);
     }
+
+    foreach ($analyses as $a) {
+        if ($a['project_id'] === $id) {
+            $selectedAnalysis = $a;
+            break;
+        }
+    }
+
+    if (!$selectedProject) {
+        throw $this->createNotFoundException('Réalisation non trouvée !');
+    }
+
+    return $this->render('home/project_detail.html.twig', [
+        'project'  => $selectedProject,
+        'analysis' => $selectedAnalysis,
+    ]);
+}
 
     // --- ROUTES PASSIONS ---
 
@@ -312,5 +384,10 @@ public function contact(Request $request): Response
     public function linux(): Response
     {
         return $this->render('home/passions/linux.html.twig');
+    }
+    #[Route('/passion/photographie', name: 'app_photographie')]
+    public function photographie(): Response
+    {
+        return $this->render('home/passions/photographie.html.twig');
     }
 }

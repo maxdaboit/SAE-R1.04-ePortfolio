@@ -115,23 +115,27 @@
 <body>
 
     <header class="header">
-        <div class="container-custom">
-            <div class="header-content">
-                <div class="logo-section">
-                    <h1>DA BOIT Maxence</h1>
-                    <p>Groupe TP: <strong>B1</strong></p>
+    <div class="container-custom">
+        <div class="header-content">
+            <div class="logo-section">
+    <a href="{{ path('app_home') }}" style="text-decoration: none; color: #000;">
+        <h1 class="mb-0">DA BOIT Maxence</h1>
+        <p>Groupe TP: <strong>B1</strong></p>
+    </a>
+</div>
+
+            <button class="menu-toggle" id="menuToggle">
+                <div class="menu-text-wrap">
+                    <span class="menu-text-inner"><span>Menu</span><span>Fermer</span></span>
                 </div>
-                <button class="menu-toggle" id="menuToggle">
-                    <div class="menu-text-wrap">
-                        <span class="menu-text-inner"><span>Menu</span><span>Fermer</span></span>
-                    </div>
-                    <div class="menu-icon">
-                        <span class="line"></span><span class="line v-line"></span>
-                    </div>
-                </button>
-            </div>
+                <div class="menu-icon">
+                    <span class="line"></span><span class="line v-line"></span>
+                </div>
+            </button>
         </div>
-    </header>
+    </div>
+</header>
+
 
     <div class="menu-overlay" id="menuOverlay">
         <div class="menu-panel">

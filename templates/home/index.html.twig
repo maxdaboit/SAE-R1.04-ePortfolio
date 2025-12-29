@@ -4,7 +4,9 @@
 
 {% block stylesheets %}
 <style>
-    /* BENTO GRID SPECIFICS */
+    /* ========================
+       BENTO GRID
+       ======================== */
     .bento-grid {
         display: grid;
         grid-template-columns: repeat(12, 1fr);
@@ -23,101 +25,337 @@
         overflow: hidden;
         position: relative;
     }
-    
-    .bento-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+
+    .bento-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
 
     .col-span-12 { grid-column: span 12; }
-    .col-span-8 { grid-column: span 8; }
-    .col-span-6 { grid-column: span 6; }
-    .col-span-4 { grid-column: span 4; }
+    .col-span-8  { grid-column: span 8; }
+    .col-span-6  { grid-column: span 6; }
+    .col-span-4  { grid-column: span 4; }
 
-    @media (max-width: 968px) { .col-span-8, .col-span-6, .col-span-4 { grid-column: span 12; } }
-
-    /* HERO TEXT */
-    .big-title { font-size: clamp(2.5rem, 4.5vw, 4rem); font-weight: 800; line-height: 1.1; margin-bottom: 1.5rem; }
-    .hacker-text { font-family: 'Courier New', monospace; cursor: pointer; }
-    
-    /* TECH STACK */
-    .tech-stack-wrapper { overflow: hidden; width: 100%; padding: 1rem 0; mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent); }
-    .tech-stack { display: flex; gap: 5rem; width: max-content; animation: infinite-scroll 40s linear infinite; }
-    .tech-item img { height: 50px; width: auto; opacity: 0.6; filter: grayscale(100%); transition: 0.3s; }
-    .tech-item img:hover { opacity: 1; filter: grayscale(0%); transform: scale(1.1); }
-    @keyframes infinite-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-
-    /* --- DOSSIER (FOLDER) CSS --- */
-    .folder-container { min-height: 500px; display: flex; align-items: center; justify-content: center; overflow: visible; }
-    .folder { position: relative; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); cursor: pointer; transform: scale(3.0); }
-    .folder:not(.open):hover { transform: scale(3.1) translateY(-5px); }
-    .folder.open { transform: scale(3.1) translateY(-5px); }
-    .folder__back { width: 100px; height: 80px; background: #4218CC; border-radius: 0 10px 10px 10px; position: relative; }
-    .folder__back::after { position: absolute; bottom: 98%; left: 0; content: ''; width: 30px; height: 10px; background: #4218CC; border-radius: 5px 5px 0 0; }
-    .folder__front { position: absolute; z-index: 3; width: 100%; height: 100%; background: #5227FF; border-radius: 5px 10px 10px 10px; transform-origin: bottom; transition: all 0.3s ease-in-out; }
-    .folder.open .folder__front { transform: skew(15deg) scaleY(0.6); }
-
-    .paper { 
-        position: absolute; z-index: 2; bottom: 10%; left: 50%; 
-        width: 70%; height: 80%; background: #fff; border-radius: 5px; 
-        transition: 0.3s; transform: translate(-50%, 10%); 
-        display: flex; flex-direction: column; text-decoration: none!important; 
-        box-shadow: 0 2px 5px rgba(0,0,0,0.1); border: 1px solid rgba(0,0,0,0.05); 
+    @media (max-width: 968px) {
+        .col-span-8,
+        .col-span-6,
+        .col-span-4 {
+            grid-column: span 12;
+        }
     }
-    .folder.open .paper:nth-child(1) { transform: translate(-120%, -70%) rotateZ(-15deg); }
-    .folder.open .paper:nth-child(2) { transform: translate(10%, -70%) rotateZ(15deg); height: 80%; }
-    .folder.open .paper:nth-child(3) { transform: translate(-50%, -100%) rotateZ(5deg); height: 80%; }
-    
-    .paper-img { width: 100%; height: 60%; background-size: cover; background-position: center; }
-    .paper-info { flex-grow: 1; display: flex; align-items: center; justify-content: center; background: white; padding: 2px; }
-    .paper-title { font-size: 6px; font-weight: bold; color: #333; margin: 0; text-align: center; }
-    
-    /* Passions */
-    .passion-card { height: 160px; border-radius: 20px; position: relative; overflow: hidden; transition: transform 0.3s; cursor: pointer; display: block; margin-bottom: 1rem; }
-    .passion-card:hover { transform: scale(1.02); }
-    .passion-label { position: absolute; bottom: 1.5rem; left: 1.5rem; color: white; font-weight: 700; font-size: 1.2rem; text-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+
+    /* ========================
+       HERO / INTRO
+       ======================== */
+    .big-title {
+        font-size: clamp(2.5rem, 4.5vw, 4rem);
+        font-weight: 800;
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+    }
+
+    .hacker-text {
+        font-family: 'Courier New', monospace;
+        cursor: pointer;
+    }
+
+    /* ========================
+       TECH STACK (marquee)
+       ======================== */
+    .tech-stack-wrapper {
+        overflow: hidden;
+        width: 100%;
+        padding: 1rem 0;
+        mask-image: linear-gradient(
+            to right,
+            transparent,
+            black 10%,
+            black 90%,
+            transparent
+        );
+    }
+
+    .tech-stack {
+        display: flex;
+        gap: 5rem;
+        width: max-content;
+        animation: infinite-scroll 40s linear infinite;
+    }
+
+    .tech-item img {
+        height: 50px;
+        width: auto;
+        opacity: 0.6;
+        filter: grayscale(100%);
+        transition: 0.3s;
+    }
+
+    .tech-item img:hover {
+        opacity: 1;
+        filter: grayscale(0%);
+        transform: scale(1.1);
+    }
+
+    @keyframes infinite-scroll {
+        from { transform: translateX(0); }
+        to   { transform: translateX(-50%); }
+    }
+
+    /* ========================
+       DOSSIER INTERACTIF
+       ======================== */
+    .folder-container {
+        min-height: 500px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: visible;
+    }
+
+    .folder {
+        position: relative;
+        transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        cursor: pointer;
+        transform: scale(3.0);
+    }
+
+    .folder:not(.open):hover {
+        transform: scale(3.1) translateY(-5px);
+    }
+
+    .folder.open {
+        transform: scale(3.1) translateY(-5px);
+    }
+
+    .folder__back {
+        width: 100px;
+        height: 80px;
+        background: #4218CC;
+        border-radius: 0 10px 10px 10px;
+        position: relative;
+    }
+
+    .folder__back::after {
+        position: absolute;
+        bottom: 98%;
+        left: 0;
+        content: '';
+        width: 30px;
+        height: 10px;
+        background: #4218CC;
+        border-radius: 5px 5px 0 0;
+    }
+
+    .folder__front {
+        position: absolute;
+        z-index: 3;
+        width: 100%;
+        height: 100%;
+        background: #5227FF;
+        border-radius: 5px 10px 10px 10px;
+        transform-origin: bottom;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .folder.open .folder__front {
+        transform: skew(15deg) scaleY(0.6);
+    }
+
+    .paper {
+        position: absolute;
+        z-index: 2;
+        bottom: 10%;
+        left: 50%;
+        width: 70%;
+        height: 80%;
+        background: #fff;
+        border-radius: 5px;
+        transition: 0.3s;
+        transform: translate(-50%, 10%);
+        display: flex;
+        flex-direction: column;
+        text-decoration: none !important;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .folder.open .paper:nth-child(1) {
+        transform: translate(-120%, -70%) rotateZ(-15deg);
+    }
+
+    .folder.open .paper:nth-child(2) {
+        transform: translate(10%, -70%) rotateZ(15deg);
+        height: 80%;
+    }
+
+    .folder.open .paper:nth-child(3) {
+        transform: translate(-50%, -100%) rotateZ(5deg);
+        height: 80%;
+    }
+
+    .paper-img {
+        width: 100%;
+        height: 60%;
+        background-size: cover;
+        background-position: center;
+    }
+
+    .paper-info {
+        flex-grow: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: white;
+        padding: 2px;
+    }
+
+    .paper-title {
+        font-size: 6px;
+        font-weight: bold;
+        color: #333;
+        margin: 0;
+        text-align: center;
+    }
+
+    /* ========================
+       PASSIONS (cartes photo + overlay)
+       ======================== */
+    .passion-card {
+        position: relative;
+        height: 220px;
+        border-radius: 20px;
+        overflow: hidden;
+        cursor: pointer;
+        display: block;
+        margin-bottom: 1rem;
+
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        transition: transform 0.3s;
+    }
+
+    .passion-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            to bottom,
+            rgba(0, 0, 0, 0.25),
+            rgba(0, 0, 0, 0.7)
+        ); /* voile sombre lisible */
+    }
+
+    .passion-card:hover {
+        transform: scale(1.02);
+    }
+
+    .passion-label {
+        position: absolute;
+        bottom: 1.5rem;
+        left: 1.5rem;
+        color: white;
+        font-weight: 700;
+        font-size: 1.2rem;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+        z-index: 1; /* au-dessus de l'overlay */
+    }
 </style>
 {% endblock %}
 
 {% block body %}
 <div class="container-custom">
     <div class="bento-grid">
-        
+
         {# 1. HERO #}
         <div class="bento-card col-span-8 d-flex flex-column justify-content-center">
-            <p class="mb-2 text-secondary fw-bold">👋 Bonjour, je suis DA BOIT Maxence</p>
-            <div class="big-title">
-                <span class="d-block hacker-text" data-value="Etudiant">Etudiant</span>
-                <span class="d-block" style="color: var(--accent-color);">BUT Réseaux & Télécoms</span>
-            </div>
-            <p class="text-secondary mb-4" style="max-width: 550px;">
-                Passionné par la <strong>cybersécurité</strong> et le <strong>développement</strong>.
+            <p class="mb-2 text-secondary fw-bold">
+                👋 Bonjour, je suis DA BOIT Maxence
             </p>
+
+            <div class="big-title">
+                <span
+                    class="d-block hacker-text"
+                    data-value="Etudiant"
+                >
+                    Etudiant
+                </span>
+                <span class="d-block" style="color: var(--accent-color);">
+                    BUT Réseaux & Télécoms
+                </span>
+            </div>
+
+            <p class="text-secondary mb-4" style="max-width: 550px;">
+                Passionné par la <strong>cybersécurité</strong> et le
+                <strong>développement</strong>.
+            </p>
+
             <div class="d-flex gap-3">
-                <a href="{{ path('app_cv') }}" class="btn btn-dark rounded-pill">Voir mon CV</a>
-                <a href="{{ path('app_contact') }}" class="btn btn-outline-dark rounded-pill">Me Contacter</a>
+                <a
+                    href="{{ path('app_cv') }}"
+                    class="btn btn-dark rounded-pill"
+                >
+                    Voir mon CV
+                </a>
+
+                <a
+                    href="{{ path('app_contact') }}"
+                    class="btn btn-outline-dark rounded-pill"
+                >
+                    Me Contacter
+                </a>
             </div>
         </div>
 
-        {# 2. LOGO #}
-        <div class="bento-card col-span-4 d-flex align-items-center justify-content-center" style="background: #e9ecef;">
-            <img src="{{ asset('Image/Image IUT/IUT.ROANNE-LOGO-NOIR.png') }}" alt="IUT Logo" style="max-width: 360px; opacity: 0.8;">
+        {# 2. LOGO IUT #}
+        <div
+            class="bento-card col-span-4 d-flex align-items-center justify-content-center"
+            style="background: #e9ecef;"
+        >
+            <img
+                src="{{ asset('Image/Image IUT/IUT.ROANNE-LOGO-NOIR.png') }}"
+                alt="IUT Logo"
+                style="max-width: 360px; opacity: 0.8;"
+            >
         </div>
 
         {# 3. TECH STACK #}
-        <div class="bento-card col-span-12 d-flex align-items-center p-0" style="overflow: hidden;">
+        <div
+            class="bento-card col-span-12 d-flex align-items-center p-0"
+            style="overflow: hidden;"
+        >
             <div class="tech-stack-wrapper">
                 <div class="tech-stack" id="techStack">
-                    <div class="tech-item"><img src="{{ asset('Image/cisco.png') }}" alt="Cisco"></div>
-                    <div class="tech-item"><img src="{{ asset('Image/python.png') }}" alt="Python"></div>
-                    <div class="tech-item"><img src="{{ asset('Image/c.png') }}" alt="c"></div>
-                    <div class="tech-item"><img src="{{ asset('Image/symfony.png') }}" alt="Symfony"></div>
-                    <div class="tech-item"><img src="{{ asset('Image/html.png') }}" alt="html"></div>
-                    <div class="tech-item"><img src="{{ asset('Image/css.png') }}" alt="css"></div>
-                    <div class="tech-item"><img src="{{ asset('Image/ubuntu.png') }}" alt="Ubuntu"></div>
+                    <div class="tech-item">
+                        <img src="{{ asset('Image/cisco.png') }}" alt="Cisco">
+                    </div>
+                    <div class="tech-item">
+                        <img src="{{ asset('Image/python.png') }}" alt="Python">
+                    </div>
+                    <div class="tech-item">
+                        <img src="{{ asset('Image/c.png') }}" alt="C">
+                    </div>
+                    <div class="tech-item">
+                        <img src="{{ asset('Image/symfony.png') }}" alt="Symfony">
+                    </div>
+                    <div class="tech-item">
+                        <img src="{{ asset('Image/html.png') }}" alt="HTML">
+                    </div>
+                    <div class="tech-item">
+                        <img src="{{ asset('Image/css.png') }}" alt="CSS">
+                    </div>
+                    <div class="tech-item">
+                        <img src="{{ asset('Image/ubuntu.png') }}" alt="Ubuntu">
+                    </div>
                 </div>
             </div>
         </div>
 
-        {# 4. LE DOSSIER INTERACTIF #}
-        <div class="bento-card col-span-12 folder-container" style="background: #f1f3f5;">
+        {# 4. DOSSIER INTERACTIF #}
+        <div
+            class="bento-card col-span-12 folder-container"
+            style="background: #f1f3f5;"
+        >
             <div style="position: absolute; top: 2rem; left: 2rem; z-index: 1;">
                 <h2>Mon Portfolio</h2>
                 <p>Cliquez sur le dossier pour explorer</p>
@@ -125,146 +363,240 @@
 
             <div class="folder" id="myFolder">
                 <div class="folder__back">
+                    {% set configs = [
+                        {'x': '-120%', 'y': '-70%',  'r': '-15deg'},
+                        {'x': '10%',   'y': '-70%',  'r': '15deg'},
+                        {'x': '-50%',  'y': '-100%', 'r': '5deg'}
+                    ] %}
+
                     {% for project in projects|slice(0, 3) %}
-                        {% set configs = [{'x': '-120%', 'y': '-70%', 'r': '-15deg'}, {'x': '10%', 'y': '-70%', 'r': '15deg'}, {'x': '-50%', 'y': '-100%', 'r': '5deg'}] %}
                         {% set cfg = configs[loop.index0] %}
-                        
-                        {# LIEN VERS LE DÉTAIL DU PROJET #}
-                        <a href="{{ path('app_project_detail', {id: project.id}) }}" class="paper" 
-                            data-base-x="{{ cfg.x }}" data-base-y="{{ cfg.y }}" data-rotate="{{ cfg.r }}">
-                            <div class="paper-img" style="background-image: url('{{ asset('Image/' ~ project.imageFilename) }}');"></div>
-                            <div class="paper-info"><span class="paper-title">{{ project.title }}</span></div>
+
+                        <a
+                            href="{{ path('app_project_detail', { id: project.id }) }}"
+                            class="paper"
+                            data-base-x="{{ cfg.x }}"
+                            data-base-y="{{ cfg.y }}"
+                            data-rotate="{{ cfg.r }}"
+                        >
+                            <div
+                                class="paper-img"
+                                style="background-image: url('{{ asset('Image/' ~ project.imageFilename) }}');"
+                            ></div>
+
+                            <div class="paper-info">
+                                <span class="paper-title">
+                                    {{ project.title }}
+                                </span>
+                            </div>
                         </a>
                     {% endfor %}
+
                     <div class="folder__front"></div>
                 </div>
             </div>
-            
-            {# LIEN VERS TOUS LES PROJETS #}
-            <a href="{{ path('app_eportfolio') }}" style="position: absolute; bottom: 2rem; right: 2rem;" class="btn btn-sm btn-outline-dark rounded-pill">Tout voir</a>
+
+            <a
+                href="{{ path('app_eportfolio') }}"
+                class="btn btn-sm btn-outline-dark rounded-pill"
+                style="position: absolute; bottom: 2rem; right: 2rem;"
+            >
+                Tout voir
+            </a>
         </div>
 
-        {# 5. PASSIONS #}
+        {# 5. PASSIONS (images + overlay) #}
         <div class="bento-card col-span-6">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h2>Mes Passions</h2>
-                <a href="{{ path('app_passions') }}" class="small text-muted">Voir détails →</a>
+                <a
+                    href="{{ path('app_passions') }}"
+                    class="small text-muted"
+                >
+                    Voir détails →
+                </a>
             </div>
+
             <div class="row g-3">
-                {# JAPONAIS (Passe en col-6) #}
-                <div class="col-6">
-                    <a href="{{ path('app_japanese') }}" class="passion-card" style="background: linear-gradient(135deg, #FF9A9E 0%, #FECFEF 100%);">
+                {# Japonais #}
+                <div class="col-12">
+                    <a
+                        href="{{ path('app_japanese') }}"
+                        class="passion-card"
+                        style="background-image: url('{{ asset('Photo/1.jpg') }}');"
+                    >
                         <span class="passion-label">日本語</span>
                     </a>
                 </div>
-                
-                {# LINUX (Passe en col-6) #}
-                <div class="col-6">
-                    <a href="{{ path('app_linux') }}" class="passion-card" style="background: linear-gradient(135deg, #1a1b26 0%, #000 100%);">
-                        <span class="passion-label" style="color: #9ece6a;">Linux</span>
+
+                {# Photographie #}
+                <div class="col-12">
+                    <a
+                        href="{{ path('app_photographie') }}"
+                        class="passion-card"
+                        style="background-image: url('{{ asset('Photo/2.jpg') }}');"
+                    >
+                        <span class="passion-label">Photographie</span>
                     </a>
                 </div>
             </div>
-            {# PHOTOGRAPHIE #}
-                <div class="col-6">
-                    <a href="{{ path('app_photographie') }}" class="passion-card" style="background: linear-gradient(135deg, #4e54c8 0%, #8f94fb 100%);">
-                        <span class="passion-label">Photo</span>
-                    </a>
-    </div>
         </div>
 
         {# 6. PARCOURS #}
         <div class="bento-card col-span-6">
             <h2>Mon Parcours</h2>
+
             <div class="mt-4 d-flex flex-column gap-3">
                 <div class="d-flex justify-content-between border-bottom pb-2">
-                    <div><div class="fw-bold">BUT R&T</div><div class="small text-muted">IUT de Roanne</div></div>
+                    <div>
+                        <div class="fw-bold">BUT R&amp;T</div>
+                        <div class="small text-muted">IUT de Roanne</div>
+                    </div>
                     <div class="text-end fw-bold text-muted">En cours</div>
                 </div>
 
-            <div class="d-flex justify-content-between border-bottom pb-2">
-                    <div><div class="fw-bold">Menuisier Bois</div><div class="small text-muted">France Décors, Thizy</div></div>
+                <div class="d-flex justify-content-between border-bottom pb-2">
+                    <div>
+                        <div class="fw-bold">Menuisier Bois</div>
+                        <div class="small text-muted">France Décors, Thizy</div>
+                    </div>
                     <div class="text-end fw-bold text-muted">2021-2024</div>
                 </div>
 
-            <div class="d-flex justify-content-between border-bottom pb-2">
-                    <div><div class="fw-bold">Préparateur de commandes</div><div class="small text-muted">Intermarché / Les Mousquetaires, Reyrieux</div></div>
+                <div class="d-flex justify-content-between border-bottom pb-2">
+                    <div>
+                        <div class="fw-bold">Préparateur de commandes</div>
+                        <div class="small text-muted">
+                            Intermarché / Les Mousquetaires, Reyrieux
+                        </div>
+                    </div>
                     <div class="text-end fw-bold text-muted">2020-2021</div>
                 </div>
 
                 <div class="d-flex justify-content-between border-bottom pb-2">
-                    <div><div class="fw-bold">Bac Pro SEN</div><div class="small text-muted">Lycée Arago, Roanne</div></div>
+                    <div>
+                        <div class="fw-bold">Bac Pro SEN</div>
+                        <div class="small text-muted">Lycée Arago, Roanne</div>
+                    </div>
                     <div class="text-end fw-bold text-muted">2016-2019</div>
                 </div>
+
                 <div class="d-flex justify-content-between border-bottom pb-2">
-                    <div><div class="fw-bold">Stagiaire Technicien SAV & Informatique</div><div class="small text-muted">Roanne</div></div>
+                    <div>
+                        <div class="fw-bold">
+                            Stagiaire Technicien SAV &amp; Informatique
+                        </div>
+                        <div class="small text-muted">Roanne</div>
+                    </div>
                     <div class="text-end fw-bold text-muted">2016-2019</div>
                 </div>
+
                 <div class="d-flex justify-content-between border-bottom pb-2">
-                    <div><div class="fw-bold">BEP SEN</div><div class="small text-muted">Lycée Arago, Roanne</div></div>
+                    <div>
+                        <div class="fw-bold">BEP SEN</div>
+                        <div class="small text-muted">Lycée Arago, Roanne</div>
+                    </div>
                     <div class="text-end fw-bold text-muted">2016-2019</div>
                 </div>
             </div>
         </div>
 
-    </div> 
+    </div>
 </div>
 {% endblock %}
 
 {% block javascripts %}
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // --- 1. DOSSIER ---
+        // Dossier interactif
         const folder = document.getElementById('myFolder');
-        if(folder) {
+
+        if (folder) {
             const papers = folder.querySelectorAll('.paper');
+
             folder.addEventListener('click', (e) => {
-                // IMPORTANT: Si clic sur feuille ouverte, on suit le lien
-                if (folder.classList.contains('open') && e.target.closest('.paper')) return;
+                if (folder.classList.contains('open') && e.target.closest('.paper')) {
+                    return;
+                }
+
                 const isOpen = folder.classList.toggle('open');
+
                 if (!isOpen) {
-                    papers.forEach(p => { p.style.transform = ''; p.style.zIndex = ''; });
+                    papers.forEach((p) => {
+                        p.style.transform = '';
+                        p.style.zIndex = '';
+                    });
                 }
             });
-            // Effet Magnétique
-            papers.forEach(paper => {
+
+            papers.forEach((paper) => {
                 paper.addEventListener('mousemove', (e) => {
-                    if (!folder.classList.contains('open')) return;
+                    if (!folder.classList.contains('open')) {
+                        return;
+                    }
+
                     const rect = paper.getBoundingClientRect();
-                    const offsetX = (e.clientX - (rect.left + rect.width/2)) * 0.3;
-                    const offsetY = (e.clientY - (rect.top + rect.height/2)) * 0.3;
-                    paper.style.transform = `translate(calc(${paper.dataset.baseX} + ${offsetX}px), calc(${paper.dataset.baseY} + ${offsetY}px)) rotateZ(${paper.dataset.rotate}) scale(1.1)`;
+                    const offsetX = (e.clientX - (rect.left + rect.width / 2)) * 0.3;
+                    const offsetY = (e.clientY - (rect.top + rect.height / 2)) * 0.3;
+
+                    paper.style.transform =
+                        `translate(calc(${paper.dataset.baseX} + ${offsetX}px), ` +
+                        `calc(${paper.dataset.baseY} + ${offsetY}px)) ` +
+                        `rotateZ(${paper.dataset.rotate}) scale(1.1)`;
+
                     paper.style.zIndex = '10';
                 });
+
                 paper.addEventListener('mouseleave', () => {
                     if (folder.classList.contains('open')) {
-                        paper.style.transform = `translate(${paper.dataset.baseX}, ${paper.dataset.baseY}) rotateZ(${paper.dataset.rotate})`;
+                        paper.style.transform =
+                            `translate(${paper.dataset.baseX}, ${paper.dataset.baseY}) ` +
+                            `rotateZ(${paper.dataset.rotate})`;
                         paper.style.zIndex = '';
                     }
                 });
             });
         }
-        // --- 2. HACKER TEXT ---
-        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-        document.querySelectorAll(".hacker-text").forEach(el => {
+
+        // Effet "hacker text"
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
+
+        document.querySelectorAll('.hacker-text').forEach((el) => {
             const run = () => {
-                let i = 0; const original = el.dataset.value;
+                let i = 0;
+                const original = el.dataset.value;
+
                 clearInterval(el.interval);
+
                 el.interval = setInterval(() => {
-                    el.innerText = original.split("").map((l, idx) => {
-                        if(idx < i) return original[idx];
-                        return chars[Math.floor(Math.random() * chars.length)];
-                    }).join("");
-                    if(i >= original.length) clearInterval(el.interval);
-                    i += 1 / 2;
+                    el.innerText = original
+                        .split('')
+                        .map((l, idx) => {
+                            if (idx < i) {
+                                return original[idx];
+                            }
+                            return chars[Math.floor(Math.random() * chars.length)];
+                        })
+                        .join('');
+
+                    if (i >= original.length) {
+                        clearInterval(el.interval);
+                    }
+
+                    i += 0.5;
                 }, 30);
             };
+
             el.onmouseover = run;
             run();
         });
-        // --- 3. ANIMATION STACK ---
+
+        // Dupliquer la tech-stack pour le scroll infini
         const stack = document.getElementById('techStack');
-        if (stack) stack.innerHTML += stack.innerHTML;
+
+        if (stack) {
+            stack.innerHTML += stack.innerHTML;
+        }
     });
 </script>
 {% endblock %}

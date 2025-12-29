@@ -4,7 +4,7 @@
 
 {% block stylesheets %}
 <style>
-    /* --- 1. STYLES DE LA BENTO GRID (Nécessaire ici) --- */
+    /* --- 1. STYLES DE LA BENTO GRID --- */
     .bento-grid {
         display: grid;
         grid-template-columns: repeat(12, 1fr);
@@ -22,48 +22,182 @@
     }
 
     .col-span-12 { grid-column: span 12; }
-    .col-span-8 { grid-column: span 8; }
-    .col-span-6 { grid-column: span 6; }
-    .col-span-4 { grid-column: span 4; }
+    .col-span-8  { grid-column: span 8; }
+    .col-span-6  { grid-column: span 6; }
+    .col-span-4  { grid-column: span 4; }
 
     @media (max-width: 968px) {
-        .col-span-8, .col-span-6, .col-span-4 { grid-column: span 12; }
+        .col-span-8, .col-span-6, .col-span-4 {
+            grid-column: span 12;
+        }
     }
 
-    /* --- 2. STYLES ANKI (Ton code) --- */
+    /* --- 2. STYLES ANKI (flip + base) --- */
     .anki-container {
         perspective: 1000px;
-        width: 100%; height: 220px; /* Ajusté un peu pour la carte */
-        display: flex; justify-content: center; align-items: center;
+        width: 100%;
+        height: 220px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
+
     .anki-card {
-        width: 280px; height: 180px;
-        position: relative; transform-style: preserve-3d;
+        width: 280px;
+        height: 180px;
+        position: relative;
+        transform-style: preserve-3d;
         transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
         cursor: pointer;
     }
-    .anki-card:hover { transform: rotateY(180deg); }
-    
+
+    .anki-card:hover {
+        transform: rotateY(180deg);
+    }
+
     .anki-face {
-        position: absolute; width: 100%; height: 100%;
-        backface-visibility: hidden; border-radius: 15px;
-        display: flex; flex-direction: column; justify-content: center; align-items: center;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        backface-visibility: hidden;
+        border-radius: 15px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     }
-    .anki-front { background: white; color: #333; border-bottom: 4px solid #FF9A9E; }
-    .anki-back { background: #333; color: white; transform: rotateY(180deg); }
-    
-    .kanji-display { font-size: 4rem; font-weight: 800; line-height: 1; }
-    .furigana { font-size: 0.9rem; opacity: 0.6; margin-bottom: 0.5rem; }
-    
+
+    .anki-front {
+        background: white;
+        color: #333;
+        border-bottom: 4px solid #FF9A9E;
+    }
+
+    .anki-back {
+        background: #333;
+        color: white;
+        transform: rotateY(180deg);
+    }
+
+    .kanji-display {
+        font-size: 4rem;
+        font-weight: 800;
+        line-height: 1;
+    }
+
+    .furigana {
+        font-size: 0.9rem;
+        opacity: 0.6;
+        margin-bottom: 0.5rem;
+    }
+
+    /* --- 3. STYLES “JP‑MINING‑NOTE LIKE” --- */
+    .jp-card {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: #ffffff;
+        border-radius: 18px;
+        box-shadow: 0 12px 30px rgba(15, 23, 42, 0.18);
+    }
+
+    .jp-front {
+        padding: 1.4rem 1.6rem;
+        align-items: flex-start;
+    }
+
+    .jp-expression {
+        display: flex;
+        align-items: baseline;
+        gap: 0.6rem;
+    }
+
+    .jp-word {
+        font-size: 2.2rem;
+        font-weight: 700;
+        letter-spacing: 0.03em;
+    }
+
+    .jp-reading {
+        font-size: 1rem;
+        color: #64748b;
+    }
+
+    .jp-sentence {
+        background: #f8fafc;
+        border-left: 3px solid #e2e8f0;
+        margin: 1.2rem 0 0;
+        padding: 0.5rem 0.9rem;
+        text-align: left;
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+
+    .jp-sentence p {
+        margin: 0;
+    }
+
+    .jp-highlight {
+        background-color: #d3e3fd;
+        padding: 0 0.15em;
+        border-radius: 4px;
+    }
+
+    .jp-back {
+        padding: 1.4rem 1.6rem;
+        align-items: flex-start;
+    }
+
+    .jp-gloss {
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+
+    .jp-tags {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        font-size: 0.75rem;
+    }
+
+    .jp-tags li {
+        background: #0f172a;
+        color: #e2e8f0;
+        border-radius: 999px;
+        padding: 0.18rem 0.7rem;
+    }
+
+    .night-mode .jp-card {
+        background: #020617;
+        color: #e5e7eb;
+    }
+
+    .night-mode .jp-sentence {
+        background: #020617;
+        border-left-color: #1e293b;
+    }
+
+    .night-mode .jp-highlight {
+        background: #3c64a7;
+    }
+
     /* Titre Hero */
-    .big-title { font-size: 3rem; font-weight: 800; line-height: 1.1; }
+    .big-title {
+        font-size: 3rem;
+        font-weight: 800;
+        line-height: 1.1;
+    }
 
     /* Code block style */
     .code-block {
-        background: #1e1e1e; color: #d4d4d4;
-        padding: 1.5rem; border-radius: 15px;
-        font-family: 'Consolas', 'Monaco', monospace; font-size: 0.85rem;
+        background: #1e1e1e;
+        color: #d4d4d4;
+        padding: 1.5rem;
+        border-radius: 15px;
+        font-family: 'Consolas', 'Monaco', monospace;
+        font-size: 0.85rem;
         overflow-x: auto;
         border: 1px solid #333;
     }
@@ -72,7 +206,7 @@
 
 {% block body %}
 <div class="container-custom py-5">
-    
+
     <a href="{{ path('app_passions') }}" class="btn btn-sm btn-outline-dark rounded-pill mb-4">
         ← Retour
     </a>
@@ -80,30 +214,59 @@
     <div class="bento-grid">
 
         {# BLOC TITRE #}
-        <div class="bento-card col-span-8 d-flex flex-column justify-content-center" style="background: linear-gradient(135deg, #fff0f0 0%, #ffffff 100%);">
+        <div class="bento-card col-span-8 d-flex flex-column justify-content-center"
+                style="background: linear-gradient(135deg, #fff0f0 0%, #ffffff 100%);">
             <span class="badge bg-danger mb-3" style="width: fit-content;">Projet Personnel</span>
-            <h1 class="big-title mb-3">Nihongo <br><span style="color: #e74c3c;">Engineering</span></h1>
+            <h1 class="big-title mb-3">
+                日本語 <br><span style="color: #e74c3c;">Japonais</span>
+            </h1>
             <p class="text-secondary" style="font-size: 1.1rem; max-width: 600px;">
-                Comment je hacke ma mémoire en utilisant HTML, CSS et le système de répétition espacée (SRS) pour optimiser mon apprentissage du japonais.
+                J’ai passé un mois à Tokyo pour apprendre le japonais, porté par ma passion pour la culture japonaise, et Anki est devenu mon moyen préféré pour progresser chaque jour, en complément du contenu japonais que je consomme (animés, vidéos, articles, etc.).
             </p>
         </div>
 
-        {# BLOC CARTE INTERACTIVE #}
-        <div class="bento-card col-span-4 d-flex align-items-center justify-content-center flex-column" style="background: #f8f9fa;">
+        {# BLOC CARTE “jp-mining-note like” #}
+        <div class="bento-card col-span-4 d-flex flex-column" style="background: #f6f7fb;">
+
             <div class="anki-container">
-                <div class="anki-card">
-                    <div class="anki-face anki-front">
-                        <span class="furigana">ねこ</span>
-                        <span class="kanji-display">猫</span>
+                <div class="anki-card jp-card">
+                    {# Front : expression + lecture + phrase de contexte #}
+                    <div class="anki-face anki-front jp-front">
+                        <div class="jp-expression">
+                            <span class="jp-word">猫</span>
+                            <span class="jp-reading">ねこ</span>
+                        </div>
+
+                        <blockquote class="jp-sentence mt-3 mb-0">
+                            <p>
+                                きのう<span class="jp-highlight">猫</span>を飼い始めました。
+                            </p>
+                        </blockquote>
                     </div>
-                    <div class="anki-face anki-back">
-                        <h3 style="margin:0;">Chat</h3>
-                        <small style="opacity:0.7;">Noun / Cat</small>
+
+                    {# Back : glossaire / tags #}
+                    <div class="anki-face anki-back jp-back">
+                        <div class="jp-gloss">
+                            <strong>Chat</strong> — animal de compagnie, souvent mignon mais très indépendant.
+                        </div>
+                        <ul class="jp-tags mt-3">
+                            <li>Noun</li>
+                            <li>JLPT N5</li>
+                        </ul>
                     </div>
                 </div>
             </div>
+
             <div class="mt-3 text-muted small">
-                <i class="fas fa-mouse-pointer me-1"></i> Survolez la carte
+                <i class="fas fa-mouse-pointer me-1"></i> Survolez la carte.
+            </div>
+
+            <div class="mt-3">
+                <a href="https://github.com/Aquafina-water-bottle/jp-mining-note"
+                    class="text-decoration-none small text-muted"
+                    target="_blank" rel="noopener">
+                    
+                </a>
             </div>
         </div>
 
@@ -111,10 +274,20 @@
         <div class="bento-card col-span-6">
             <h3>La Problématique</h3>
             <p class="text-secondary mt-3">
-                Les cartes Anki par défaut sont visuellement pauvres. Pour apprendre efficacement une langue complexe comme le japonais, le <strong>contexte visuel</strong> est clé.
+                Les cartes Anki par défaut sont visuellement pauvres. Pour apprendre efficacement une langue
+                complexe comme le japonais, le <strong>contexte visuel</strong> est clé.
             </p>
             <p class="text-secondary">
-                J'ai développé des templates CSS qui adaptent automatiquement la couleur de la carte selon la nature grammaticale du mot (Verbe = Rouge, Adjectif = Bleu) grâce à des attributs HTML injectés dynamiquement par JavaScript.
+                Je me suis inspiré du preset <em>jp-mining-note</em> pour construire des cartes
+                qui mettent en avant :
+            </p>
+            <ul class="text-secondary">
+                <li>le mot cible (gros kanji + furigana) ;</li>
+                <li>une phrase de contexte où le mot est surligné ;</li>
+                <li>un bloc de définition et des tags (JLPT, type de mot, etc.).</li>
+            </ul>
+            <p class="text-secondary">
+                Cela permet de lier immédiatement la forme écrite, la lecture, le sens et le contexte d’utilisation.
             </p>
         </div>
 
@@ -122,17 +295,23 @@
         <div class="bento-card col-span-6" style="background: #111; border: 1px solid #333;">
             <h4 style="color: white; margin-bottom: 1rem;">CSS Template (Extrait)</h4>
             <div class="code-block">
-<pre style="margin:0;"><code>.card.noun { 
-border-top: 5px solid #3498db; 
+<pre style="margin:0;"><code>.jp-sentence p {
+    margin: 0;
 }
 
-.card.verb { 
-border-top: 5px solid #e74c3c; 
+.jp-highlight {
+    background-color: #d3e3fd;
+    padding: 0 0.15em;
+    border-radius: 4px;
 }
 
-/* Furigana hover effect */
-ruby rt { opacity: 0; transition: 0.3s; }
-.card:hover ruby rt { opacity: 1; }</code></pre>
+/* Tags de type jp-mining-note */
+.jp-tags li {
+    background: #0f172a;
+    color: #e2e8f0;
+    border-radius: 999px;
+    padding: 0.18rem 0.7rem;
+}</code></pre>
             </div>
         </div>
 

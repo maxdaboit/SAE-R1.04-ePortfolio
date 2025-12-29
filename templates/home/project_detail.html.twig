@@ -14,19 +14,31 @@
     .project-panels .glass-card {
         height: 100%;
     }
+
+    .project-header-badges {
+        gap: .5rem;
+    }
+
+    .project-left-column {
+        gap: 1.5rem;
+    }
+
+    .project-tech-badges {
+        gap: .5rem;
+    }
 </style>
 {% endblock %}
 
 {% block body %}
 <div class="container-custom py-5">
-    <div class="row">
+    <div class="row g-4">
         {# Colonne de Gauche : Infos #}
-        <div class="col-lg-5 mb-4 d-flex flex-column gap-4">
-            <a href="{{ path('app_eportfolio') }}" class="text-muted d-inline-block">← Retour</a>
+        <div class="col-lg-5 d-flex flex-column project-left-column">
+            <a href="{{ path('app_eportfolio') }}" class="text-muted d-inline-block mb-1">← Retour</a>
 
             <div>
                 <h1 class="display-4 fw-bold mb-3">{{ project.title }}</h1>
-                <div class="d-flex gap-2 mb-3">
+                <div class="d-flex flex-wrap project-header-badges mb-1">
                     <span class="badge bg-primary">{{ project.date }}</span>
                     <span class="badge bg-primary">{{ project.ACTYPE }}</span>
                     <span class="badge bg-secondary">{{ project.duration }}</span>
@@ -34,13 +46,13 @@
             </div>
 
             <div class="glass-card p-4">
-                <h5 class="fw-bold mb-2">Le projet</h5>
+                <h5 class="fw-bold mb-3">Le projet</h5>
                 <p class="text-secondary mb-0">{{ project.full_description }}</p>
             </div>
 
             {% if analysis is defined and analysis %}
                 <div class="glass-card p-4">
-                    <h5 class="fw-bold mb-2">Analyse réflexive</h5>
+                    <h5 class="fw-bold mb-3">Analyse réflexive</h5>
 
                     <p class="text-secondary mb-3">
                         {{ analysis.text1 }}
@@ -53,20 +65,11 @@
                     </p>
                 </div>
             {% endif %}
-
-            <div>
-                <h5 class="fw-bold mb-3">Technologies</h5>
-                <div class="d-flex flex-wrap gap-2">
-                    {% for tech in project.technologies %}
-                        <span class="badge bg-light text-dark border p-2">{{ tech }}</span>
-                    {% endfor %}
-                </div>
-            </div>
         </div>
 
         {# Colonne de Droite : Image + Challenges / Résultats #}
-        <div class="col-lg-7">
-            <div class="rounded-4 overflow-hidden shadow-lg mb-5">
+        <div class="col-lg-7 d-flex flex-column gap-4">
+            <div class="rounded-4 overflow-hidden shadow-lg">
                 <img src="{{ asset('Image/' ~ project.imageFilename) }}" alt="{{ project.title }}" class="w-100" style="object-fit: cover; height: 400px;">
             </div>
 
@@ -91,6 +94,15 @@
                             <li class="mb-2">{{ result }}</li>
                         {% endfor %}
                     </ul>
+                </div>
+            </div>
+
+            <div>
+                <h5 class="fw-bold mb-3">Technologies</h5>
+                <div class="d-flex flex-wrap project-tech-badges">
+                    {% for tech in project.technologies %}
+                        <span class="badge bg-light text-dark border p-2">{{ tech }}</span>
+                    {% endfor %}
                 </div>
             </div>
         </div>

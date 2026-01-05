@@ -16,7 +16,7 @@ Le site respecte les exigences de la SAE1.04 :
 - Page d’accueil avec :
   - Informations personnelles (nom, prénom, groupe TP, etc.).
   - Une phrase de présentation.
-  - Un container « Pour en savoir plus » (Bootswatch / Bootstrap) menant vers une page loisirs/passions/projets.
+  - Un container « Menu » menant vers une page Mes passions/Mon Portfolio.
 - Une page **Mes Passions** avec des photos et une mise en page soignée présentant mes passions.
 - Page **CV** comprenant :
   - Les sections : **Formations**, **Expériences professionnelles**, **Compétences**.

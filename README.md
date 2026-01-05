@@ -39,7 +39,14 @@ Le site respecte les exigences de la SAE1.04 :
 
 ## 🚀 Installation et exécution
 
-1. Cloner le dépôt :
-   ```bash
+1. Prérequis : installer PHP, Composer, Git et (optionnel) la CLI Symfony.
+2. Cloner le projet :
    git clone https://github.com/maxdaboit/SAE-R1.04-ePortfolio.git
    cd SAE-R1.04-ePortfolio
+3. Installer les dépendances :
+   composer install
+4. Lancer le serveur de développement :
+   symfony serve
+   (ou php -S localhost:8000 -t public/)
+5. Ouvrir le site dans le navigateur à l’adresse indiquée (souvent https://127.0.0.1:8000).
+6. Arrêter le serveur avec Ctrl + C dans le terminal.

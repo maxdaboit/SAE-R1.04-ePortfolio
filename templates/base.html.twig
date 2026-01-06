@@ -1,89 +1,258 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    {# Définition de l'encodage des caractères #}
     <meta charset="UTF-8">
+    {# Rendre la page responsive sur mobile (adaptation à la largeur de l'écran) #}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {# Bloc Twig pour permettre aux pages enfants de personnaliser le titre #}
     <title>{% block title %}DA BOIT - Portfolio{% endblock %}</title>
-    
+
+    {# Import du thème Bootswatch "Flatly" (basé sur Bootstrap 5.3.2) via CDN #}
     <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.2/dist/flatly/bootstrap.min.css" rel="stylesheet">
+    {# Pré-connexion à Google Fonts pour optimiser le chargement de la police #}
     <link rel="preconnect" href="https://fonts.googleapis.com">
+    {# Import de la police "Inter" avec plusieurs graisses (300 à 800) #}
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    {# Import de Font Awesome pour utiliser des icônes (LinkedIn, GitHub, Email, etc.) #}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <style>
         /* --- CONFIGURATION GLOBALE --- */
+        /* Variables CSS pour centraliser les couleurs et le style global */
         :root {
-            --accent-color: #5227FF;
-            --text-primary: #111;
-            --text-secondary: #666;
-            --bg-color: #ffffff;
-            --card-bg: #f8f9fa;
-            --radius: 28px;
+            --accent-color: #5227FF;       /* Couleur principale (accents, liens, etc.) */
+            --text-primary: #111;          /* Couleur principale du texte */
+            --text-secondary: #666;        /* Couleur secondaire du texte */
+            --bg-color: #ffffff;           /* Couleur de fond globale du site */
+            --card-bg: #f8f9fa;            /* Couleur de fond des cartes / sections */
+            --radius: 28px;                /* Rayon de bord par défaut pour les éléments arrondis */
         }
 
+        /* Style global du body */
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-            overflow-x: hidden;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+            font-family: 'Inter', sans-serif;      /* Police principale du site */
+            background-color: var(--bg-color);     /* Utilisation de la variable de fond */
+            color: var(--text-primary);            /* Couleur du texte principale */
+            overflow-x: hidden;                    /* Cache le scroll horizontal (évite les débordements) */
+            min-height: 100vh;                     /* Hauteur minimum : toute la hauteur de la fenêtre */
+            display: flex;                         /* Mise en page en flex pour coller le footer en bas */
+            flex-direction: column;                /* Empile header, main et footer verticalement */
         }
 
-        main { flex: 1; }
-        a { text-decoration: none !important; }
+        /* Le main prend tout l'espace disponible entre header et footer */
+        main {
+            flex: 1;
+        }
+
+        /* Supprime le soulignement des liens partout sur le site */
+        a {
+            text-decoration: none !important;
+        }
 
         /* HEADER GLASSMORPHISM */
         .header {
-            padding: 0.5rem 0;
-            border-bottom: 1px solid rgba(0,0,0,0.05);
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(10px);
-            position: sticky;
+            padding: 0.5rem 0;                                  /* Marges internes verticales */
+            border-bottom: 1px solid rgba(0,0,0,0.05);          /* Fine bordure en bas du header */
+            background: rgba(255, 255, 255, 0.85);              /* Fond blanc semi-transparent */
+            backdrop-filter: blur(10px);                        /* Effet flou de type "glassmorphism" */
+            position: sticky;                                   /* Le header reste collé en haut au scroll */
             top: 0;
-            z-index: 100;
+            z-index: 100;                                       /* Passe devant le contenu */
         }
+
+        /* Style du nom dans la section logo (titre plus petit qu'un H1 par défaut) */
         .logo-section h1 {
-    font-size: 1.4rem;   /* au lieu d’un h1 par défaut très grand */
-    margin-bottom: 0.15rem;
-}
+            font-size: 1.4rem;   /* Réduction de la taille d'un H1 standard */
+            margin-bottom: 0.15rem;
+        }
 
-.logo-section p {
-    font-size: 0.85rem;
-    margin-bottom: 0;
-    color: var(--text-secondary);
-}
+        /* Style du sous-texte (ex: groupe TP) dans la section logo */
+        .logo-section p {
+            font-size: 0.85rem;
+            margin-bottom: 0;
+            color: var(--text-secondary);   /* Utilisation de la couleur de texte secondaire */
+        }
 
-        .container-custom { max-width: 1600px; margin: 0 auto; padding: 0 2rem; }
-        .header-content { display: flex; justify-content: space-between; align-items: center; }
+        /* Container personnalisé pour contrôler la largeur maximale du contenu */
+        .container-custom {
+            max-width: 1600px;    /* Largeur max du site */
+            margin: 0 auto;       /* Centrage horizontal */
+            padding: 0 2rem;      /* Marges internes gauche / droite */
+        }
 
-        /* MENU TOGGLE (Ton code existant) */
-        .menu-toggle { background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 12px; font-weight: 600; z-index: 101; color: #000; }
-        .menu-text-wrap { height: 1.2em; overflow: hidden; text-align: right; font-size: 0.9rem; }
-        .menu-text-inner { display: flex; flex-direction: column; transition: transform 0.4s; }
-        .menu-icon { width: 24px; height: 24px; position: relative; }
-        .line { position: absolute; top: 50%; left: 0; width: 100%; height: 2px; background: currentColor; transition: 0.4s; }
-        .v-line { transform: rotate(90deg); }
+        /* Contenu du header : logo à gauche, bouton menu à droite */
+        .header-content {
+            display: flex;
+            justify-content: space-between;   /* Espace entre logo et bouton menu */
+            align-items: center;              /* Alignement vertical au centre */
+        }
 
-        /* MENU OVERLAY */
-        .menu-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 90; pointer-events: none; transition: background 0.3s; }
-        .menu-panel { position: absolute; top: 0; right: 0; width: 100%; max-width: 400px; height: 100%; background: #fff; padding: 8rem 3rem; display: flex; flex-direction: column; justify-content: space-between; transform: translateX(100%); transition: transform 0.6s cubic-bezier(0.7, 0, 0.3, 1); box-shadow: -10px 0 40px rgba(0,0,0,0.1); pointer-events: auto; }
-        .menu-link { display: block; font-size: 1.8rem; font-weight: 700; color: #000; margin-bottom: 1.5rem; opacity: 0; transform: translateY(30px); transition: 0.5s; }
-        .menu-link span { font-size: 0.9rem; color: var(--accent-color); margin-right: 15px; }
-        .menu-link:hover { color: var(--accent-color); }
-        .menu-socials { display: flex; gap: 20px; opacity: 0; transform: translateY(20px); transition: 0.5s; padding-top: 2rem; border-top: 1px solid #eee; }
-        .menu-socials a { color: var(--text-secondary); font-weight: 500; }
+        /* MENU TOGGLE (bouton qui ouvre / ferme le menu latéral) */
+        .menu-toggle {
+            background: none;                 /* Pas de fond pour le bouton */
+            border: none;                     /* Pas de bordure */
+            cursor: pointer;                  /* Curseur pointeur au survol */
+            display: flex;
+            align-items: center;
+            gap: 12px;                        /* Espace entre texte et icône */
+            font-weight: 600;                 /* Texte du bouton en semi-bold */
+            z-index: 101;                     /* Devant l'overlay pour être cliquable */
+            color: #000;                      /* Couleur du texte / icône */
+        }
 
-        /* MENU OPEN STATE */
-        body.menu-is-open .menu-text-inner { transform: translateY(-50%); }
-        body.menu-is-open .line.v-line { transform: rotate(0deg); }
-        body.menu-is-open .menu-icon { transform: rotate(180deg); }
-        body.menu-is-open .menu-overlay { pointer-events: auto; background: rgba(0,0,0,0.2); }
-        body.menu-is-open .menu-panel { transform: translateX(0); }
-        body.menu-is-open .menu-link { opacity: 1; transform: translateY(0); }
-        body.menu-is-open .menu-socials { opacity: 1; transform: translateY(0); }
-        
+        /* Conteneur du texte "Menu / Fermer" (effet d'animation verticale) */
+        .menu-text-wrap {
+            height: 1.2em;                    /* Hauteur fixe pour masquer le second mot */
+            overflow: hidden;                 /* Cache le texte qui déborde */
+            text-align: right;
+            font-size: 0.9rem;
+        }
+
+        /* Contient deux lignes : "Menu" et "Fermer" qui vont glisser verticalement */
+        .menu-text-inner {
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.4s;       /* Animation lors de l'ouverture/fermeture du menu */
+        }
+
+        /* Icône du menu (carré qui contient les deux lignes) */
+        .menu-icon {
+            width: 24px;
+            height: 24px;
+            position: relative;               /* Permet de positionner les lignes en absolu dedans */
+        }
+
+        /* Lignes du menu (pour dessiner le + / X) */
+        .line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 2px;                      /* Épaisseur de la ligne */
+            background: currentColor;         /* Utilise la couleur du texte du bouton */
+            transition: 0.4s;                 /* Animation de rotation / mouvement */
+        }
+
+        /* Deuxième ligne, initialement verticale (rotation 90°) => forme un "+" */
+        .v-line {
+            transform: rotate(90deg);
+        }
+
+        /* MENU OVERLAY : zone semi-transparente couvrant tout l'écran derrière le panneau */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            z-index: 90;
+            pointer-events: none;             /* Désactivé par défaut (non cliquable) */
+            transition: background 0.3s;      /* Transition de la couleur de fond à l'ouverture */
+        }
+
+        /* Panneau du menu latéral (slide depuis la droite) */
+        .menu-panel {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            max-width: 400px;                 /* Largeur max du panneau */
+            height: 100%;
+            background: #fff;                 /* Fond blanc pour le panneau */
+            padding: 8rem 3rem;               /* Espace interne (notamment en haut) */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;   /* Liens en haut, réseaux en bas */
+            transform: translateX(100%);      /* Initialement hors de l’écran (à droite) */
+            transition: transform 0.6s cubic-bezier(0.7, 0, 0.3, 1);  /* Animation fluide du slide */
+            box-shadow: -10px 0 40px rgba(0,0,0,0.1);                /* Ombre pour détacher du fond */
+            pointer-events: auto;             /* Le panneau lui-même reste cliquable */
+        }
+
+        /* Style des liens du menu (gros liens typés "navigation principale") */
+        .menu-link {
+            display: block;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 1.5rem;
+            opacity: 0;                        /* Caché tant que le menu n'est pas ouvert */
+            transform: translateY(30px);       /* Décalé vers le bas pour l'animation d'entrée */
+            transition: 0.5s;                  /* Transition pour opacité et transform */
+        }
+
+        /* Numéro devant chaque lien (01., 02., etc.) */
+        .menu-link span {
+            font-size: 0.9rem;
+            color: var(--accent-color);        /* Couleur accent pour le numéro */
+            margin-right: 15px;
+        }
+
+        /* Changement de couleur au survol des liens */
+        .menu-link:hover {
+            color: var(--accent-color);
+        }
+
+        /* Conteneur des liens vers les réseaux sociaux dans le menu */
+        .menu-socials {
+            display: flex;
+            gap: 20px;                         /* Espace entre chaque lien social */
+            opacity: 0;                        /* Caché au départ (avant ouverture du menu) */
+            transform: translateY(20px);       /* Légèrement décalé pour l'animation */
+            transition: 0.5s;
+            padding-top: 2rem;
+            border-top: 1px solid #eee;       /* Ligne séparatrice au-dessus des réseaux sociaux */
+        }
+
+        /* Style des liens de réseaux sociaux (texte + icône) */
+        .menu-socials a {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* --- ÉTAT "MENU OUVERT" APPLIQUÉ AU BODY --- */
+
+        /* Fait glisser le texte "Menu" vers "Fermer" */
+        body.menu-is-open .menu-text-inner {
+            transform: translateY(-50%);
+        }
+
+        /* Fait tourner la ligne verticale pour rejoindre l’horizontale (croix) */
+        body.menu-is-open .line.v-line {
+            transform: rotate(0deg);
+        }
+
+        /* Petite rotation de l'icône pour renforcer l'effet d'animation */
+        body.menu-is-open .menu-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Active l'overlay (clic et fond semi-transparent) quand le menu est ouvert */
+        body.menu-is-open .menu-overlay {
+            pointer-events: auto;
+            background: rgba(0,0,0,0.2);
+        }
+
+        /* Fait glisser le panneau de menu dans le viewport (visible) */
+        body.menu-is-open .menu-panel {
+            transform: translateX(0);
+        }
+
+        /* Affiche les liens avec une animation de translation */
+        body.menu-is-open .menu-link {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Affiche les liens des réseaux sociaux */
+        body.menu-is-open .menu-socials {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Délais progressifs pour les liens du menu (effet "staggered") */
         body.menu-is-open .menu-link:nth-child(1) { transition-delay: 0.1s; }
         body.menu-is-open .menu-link:nth-child(2) { transition-delay: 0.15s; }
         body.menu-is-open .menu-link:nth-child(3) { transition-delay: 0.2s; }
@@ -92,99 +261,175 @@
         body.menu-is-open .menu-socials { transition-delay: 0.4s; }
 
         /* FOOTER */
-        .footer { padding: 3rem 0; margin-top: 5rem; background: #f8f9fa; border-top: 1px solid rgba(0,0,0,0.05); }
-        .social-links a { width: 36px; height: 36px; border-radius: 50%; background: #fff; border: 1px solid #eee; display: flex; align-items: center; justify-content: center; color: #000; transition: 0.2s; }
-        .social-links a:hover { background: #e5e5e5; }
-        
-        /* STYLE GLOBAL CARTE VERRE (Utile pour toutes les pages) */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.75);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
-            border-radius: 20px;
+        .footer {
+            padding: 3rem 0;                                   /* Espace vertical dans le footer */
+            margin-top: 5rem;                                  /* Espace au-dessus du footer */
+            background: #f8f9fa;                               /* Fond gris clair */
+            border-top: 1px solid rgba(0,0,0,0.05);            /* Légère bordure en haut */
         }
 
+        /* Style générique pour des icônes de réseaux en forme de bouton rond (si utilisé ailleurs) */
+        .social-links a {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #fff;
+            border: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            transition: 0.2s;
+        }
+
+        .social-links a:hover {
+            background: #e5e5e5;
+        }
+
+        /* STYLE GLOBAL CARTE VERRE (Utile pour toutes les pages) */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.75);           /* Fond blanc translucide */
+            backdrop-filter: blur(12px);                     /* Flou pour l'effet "verre" */
+            border: 1px solid rgba(255, 255, 255, 0.4);      /* Bordure claire pour le contour du verre */
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1); /* Ombre légère pour la profondeur */
+            border-radius: 20px;                             /* Bords arrondis */
+        }
+
+        /* Adaptations responsives pour les écrans <= 768px (tablettes / mobiles) */
         @media (max-width: 768px) {
-            .footer-content { flex-direction: column; gap: 2rem; text-align: center; }
-            .menu-panel { max-width: 100%; }
+            .footer-content {
+                flex-direction: column;
+                gap: 2rem;
+                text-align: center;
+            }
+
+            .menu-panel {
+                max-width: 100%;   /* Sur mobile, le menu latéral prend toute la largeur */
+            }
         }
     </style>
+
+    {# Bloc optionnel pour ajouter des CSS spécifiques dans les templates enfants #}
     {% block stylesheets %}{% endblock %}
 </head>
 <body>
 
+    {# HEADER principal du site (logo + bouton de menu) #}
     <header class="header">
-    <div class="container-custom">
-        <div class="header-content">
-            <div class="logo-section">
-    <a href="{{ path('app_home') }}" style="text-decoration: none; color: #000;">
-        <h1 class="mb-0">DA BOIT Maxence</h1>
-        <p>Groupe TP: <strong>B1</strong></p>
-    </a>
-</div>
+        <div class="container-custom">
+            <div class="header-content">
 
-            <button class="menu-toggle" id="menuToggle">
-                <div class="menu-text-wrap">
-                    <span class="menu-text-inner"><span>Menu</span><span>Fermer</span></span>
+                {# Section logo : lien vers la page d'accueil #}
+                <div class="logo-section">
+                    {# Utilisation de path() de Twig pour générer l'URL de la route app_home #}
+                    <a href="{{ path('app_home') }}" style="text-decoration: none; color: #000;">
+                        <h1 class="mb-0">DA BOIT Maxence</h1>
+                        <p>Groupe TP: <strong>B1</strong></p>
+                    </a>
                 </div>
-                <div class="menu-icon">
-                    <span class="line"></span><span class="line v-line"></span>
-                </div>
-            </button>
+
+                {# Bouton qui ouvre/ferme le menu latéral #}
+                <button class="menu-toggle" id="menuToggle">
+                    {# Texte animé : affiche "Menu" ou "Fermer" selon l'état #}
+                    <div class="menu-text-wrap">
+                        <span class="menu-text-inner">
+                            <span>Menu</span>
+                            <span>Fermer</span>
+                        </span>
+                    </div>
+                    {# Icône du bouton (deux lignes formant + / X) #}
+                    <div class="menu-icon">
+                        <span class="line"></span>
+                        <span class="line v-line"></span>
+                    </div>
+                </button>
+            </div>
         </div>
-    </div>
-</header>
+    </header>
 
-
+    {# Overlay pleine page + panneau du menu latéral #}
     <div class="menu-overlay" id="menuOverlay">
         <div class="menu-panel">
+            {# Navigation principale du site #}
             <nav class="menu-nav">
+                {# Chaque lien pointe vers une route Symfony avec path() #}
                 <a href="{{ path('app_home') }}" class="menu-link"><span>01.</span> Accueil</a>
                 <a href="{{ path('app_cv') }}" class="menu-link"><span>02.</span> Mon CV</a>
                 <a href="{{ path('app_eportfolio') }}" class="menu-link"><span>03.</span> Mon Portfolio</a>
                 <a href="{{ path('app_passions') }}" class="menu-link"><span>04.</span> Mes Passions</a>
-                
             </nav>
+
+            {# Liens vers les réseaux sociaux et contact #}
             <div class="menu-socials">
-                <a href="#" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                {# Lien LinkedIn (à compléter avec le vrai profil) #}
+                <a href="#" target="_blank">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </a>
+
+                {# Lien vers le profil GitHub #}
                 <a href="https://github.com/maxdaboit" target="_blank" rel="noopener">
-                <i class="fab fa-github"></i> GitHub </a>
-                <a href="mailto:maxence.daboit@example.com"><i class="fas fa-envelope"></i> Email</a>
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+
+                {# Lien mailto pour ouvrir le client mail #}
+                <a href="mailto:maxence.daboit@example.com">
+                    <i class="fas fa-envelope"></i> Email
+                </a>
             </div>
         </div>
     </div>
 
+    {# Contenu principal, injecté par les templates enfants via le bloc "body" #}
     <main>
         {% block body %}{% endblock %}
     </main>
 
+    {# FOOTER du site #}
     <footer class="footer">
         <div class="container-custom">
+            {# Utilisation des classes Bootstrap pour l'agencement #}
             <div class="d-flex justify-content-between flex-wrap">
                 <div>
                     <h3>DA BOIT Maxence</h3>
                     <p>Étudiant BUT R&T - IUT de Roanne</p>
                 </div>
                 <div class="text-end">
+                    {# Affiche l'année courante dynamiquement avec Twig #}
                     <p><strong>© {{ "now"|date("Y") }}</strong> Tous droits réservés</p>
                 </div>
             </div>
         </div>
     </footer>
 
+    {# Script Bootstrap (bundle incluant Popper) via CDN #}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    {# Script pour gérer l'ouverture / fermeture du menu #}
     <script>
     document.addEventListener('DOMContentLoaded', () => {
+        // Récupère le bouton de toggle et l'overlay
         const toggleBtn = document.getElementById('menuToggle');
         const overlay = document.getElementById('menuOverlay');
+
+        // Fonction qui ajoute / enlève la classe "menu-is-open" sur le body
         const toggleMenu = () => document.body.classList.toggle('menu-is-open');
 
-        if(toggleBtn) toggleBtn.addEventListener('click', toggleMenu);
-        if(overlay) overlay.addEventListener('click', (e) => { if(e.target === overlay) toggleMenu(); });
-        document.querySelectorAll('.menu-link').forEach(l => l.addEventListener('click', () => document.body.classList.remove('menu-is-open')));
+        // Au clic sur le bouton, on ouvre / ferme le menu
+        if (toggleBtn) toggleBtn.addEventListener('click', toggleMenu);
+
+        // Au clic sur l'overlay (mais pas sur le panneau), on ferme le menu
+        if (overlay) overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) toggleMenu();
+        });
+
+        // Quand on clique sur un lien du menu, on ferme le menu (utile pour mobile)
+        document.querySelectorAll('.menu-link').forEach(l =>
+            l.addEventListener('click', () => document.body.classList.remove('menu-is-open'))
+        );
     });
     </script>
+
+    {# Bloc optionnel pour ajouter du JavaScript spécifique dans les templates enfants #}
     {% block javascripts %}{% endblock %}
 </body>
 </html>
